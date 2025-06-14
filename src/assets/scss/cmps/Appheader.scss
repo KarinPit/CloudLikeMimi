@@ -4,7 +4,16 @@
     align-items: center;
     width: 100%;
     height: 100%;
-    background-color: rgb(227, 227, 227);
+
+
+    img {
+        width: rem(16px);
+        height: rem(16px);
+    }
+
+    button {
+        height: 100%;
+    }
 
 
     nav {
@@ -19,6 +28,7 @@
             height: 100%;
             justify-content: center;
             align-items: center;
+            color: #0066D2;
 
             &:hover {
                 text-decoration: none;
@@ -31,9 +41,30 @@
     }
 
     .user-options {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: rem(8px);
+        height: 100%;
+
+        img:nth-child(2) {
+            width: rem(24px);
+            height: rem(24px);
+        }
+    }
+
+    @include for-normal-layout {
+
         img {
             width: rem(20px);
             height: rem(20px);
+        }
+
+        .user-options {
+            img:nth-child(2) {
+                width: rem(28px);
+                height: rem(28px);
+            }
         }
     }
 }

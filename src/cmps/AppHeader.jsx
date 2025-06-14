@@ -5,19 +5,24 @@ import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
 import userIcon from "../assets/imgs/Appheader/user.svg"
+import menuIcon from "../assets/imgs/Appheader/menu.svg"
+import searchIcon from "../assets/imgs/Appheader/search.svg"
 
 export default function AppHeader() {
 
     return (
         <section className="app-header">
             <nav>
-                <NavLink to="/">Home</NavLink>
-                <NavLink to="/link1">Link1</NavLink>
-                <NavLink to="/Link2">Link2</NavLink>
+                <button>
+                    <img src={menuIcon}></img>
+                </button>
+                <NavLink to="/">Dr Nina Pitlik</NavLink>
             </nav>
             <section className='user-options'>
+                <button>
+                    <img src={searchIcon}></img>
+                </button>
                 <img src={userIcon}></img>
-                {/* <button>Login</button> */}
             </section>
         </section>
     )

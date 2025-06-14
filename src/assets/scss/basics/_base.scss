@@ -44,11 +44,25 @@ a:hover {
 }
 
 button {
-    font-family: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    box-shadow: none;
     cursor: pointer;
+    font-family: inherit;
 
     * {
         pointer-events: none;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        background: none;
+        box-shadow: none;
+        outline: none;
     }
 }
 
@@ -88,7 +102,7 @@ input {
     width: 100%;
 }
 
-.main-app > footer {
+.main-app>footer {
     background-color: #111;
     color: white;
 }

@@ -1,8 +1,11 @@
 import { Route, HashRouter as Router, Routes } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { Provider } from 'react-redux'
 import { Suspense, lazy } from 'react';
 
 import { store } from './store/store'
+import { useSelector } from 'react-redux';
+import { setScreenWidth } from "./store/actions/app.actions"
 
 import Home from './pages/Home'
 import AppHeader from './cmps/AppHeader';
@@ -10,6 +13,18 @@ import Footer from './cmps/Footer';
 
 
 export function App() {
+    const currentWidth = useSelector((storeState) => storeState.appModule.screenWidth)
+
+    function onChangeWidth() {
+        const currentWidth = window.innerWidth
+        setScreenWidth(currentWidth)
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', onChangeWidth)
+        return () => window.removeEventListener('resize', onChangeWidth)
+    }, [])
+
     return (
         <Provider store={store}>
             <Router>
@@ -24,7 +39,5 @@ export function App() {
                 </section>
             </Router>
         </Provider >
-
-
     )
 }

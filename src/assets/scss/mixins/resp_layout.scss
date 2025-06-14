@@ -58,7 +58,7 @@ $xxl-breakpoint: 1880px;
 @mixin grid_layout() {
     display: grid;
     grid-template-columns: 100%;
-    grid-template-rows: minmax(auto, 100px) 1fr minmax(auto, 100px);
+    grid-template-rows: minmax(auto, 50px) 1fr minmax(auto, 100px);
 }
 
 @mixin grid($columns, $gap: 1rem) {
