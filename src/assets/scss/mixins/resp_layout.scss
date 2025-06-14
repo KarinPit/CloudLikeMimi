@@ -1,0 +1,68 @@
+// Padding and Spacing
+$padding-xs: 4px;
+$padding-sm: 8px;
+$padding-md: 12px;
+$padding-lg: 16px;
+$padding-xl: 20px;
+$padding-xxl: 40px;
+$padding-xxxl: 80px;
+
+// Margins
+$margin-xs: 4px;
+$margin-sm: 8px;
+$margin-md: 12px;
+$margin-lg: 16px;
+$margin-xl: 20px;
+$margin-xxl: 24px;
+$margin-xxxl: 42px;
+
+// Breakpoints
+$mobile-breakpoint: 550px;
+$narrow-breakpoint: 744px;
+$normal-breakpoint: 950px;
+$wide-breakpoint: 1128px;
+$xl-breakpoint: 1640px;
+$xxl-breakpoint: 1880px;
+
+@mixin for-mobile-layout {
+    @media (max-width: calc($mobile-breakpoint + 40px)) {
+        @content;
+    }
+}
+
+@mixin for-narrow-layout {
+    @media (min-width: calc($mobile-breakpoint)) {
+        @content;
+    }
+}
+
+@mixin for-extra-narrow-layout {
+    @media screen and (max-width: 480px) {
+        @content;
+    }
+}
+
+@mixin for-normal-layout {
+    @media (min-width: $normal-breakpoint) {
+        @content;
+    }
+}
+
+@mixin for-wide-layout {
+    @media (min-width: $wide-breakpoint) {
+        @content;
+    }
+}
+
+// Grids
+@mixin grid_layout() {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: minmax(auto, 100px) 1fr minmax(auto, 100px);
+}
+
+@mixin grid($columns, $gap: 1rem) {
+    display: grid;
+    grid-template-columns: repeat($columns, 1fr);
+    gap: $gap;
+}

@@ -1,0 +1,27 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: rem(20px);
+    height: 100%;
+
+    h1 {
+        font-size: rem(24px);
+    }
+
+    img {
+        min-width: rem(100px);
+        min-height: rem(100px);
+        max-width: rem(600px);
+        max-height: rem(250px);
+        width: 80vw;
+        height: 50vh;
+    }
+
+    @include for-normal-layout {
+        img {
+            max-height: rem(600px);
+        }
+    }
+}

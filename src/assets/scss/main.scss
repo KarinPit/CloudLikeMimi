@@ -1,0 +1,17 @@
+/* mixins */
+@import "mixins/resp_layout.scss";
+@import "mixins/functions.scss";
+
+/*  Basics */
+@import "basics/base";
+@import "basics/helpers";
+@import "basics/layout";
+
+
+/*  Pages */
+@import "pages/Home.scss";
+
+
+/*  Components */
+@import "cmps/Appheader.scss";
+@import "cmps/Footer.scss";

@@ -1,0 +1,46 @@
+.main-app {
+    font-family: Arial;
+    @include grid_layout();
+
+    .app-header {
+        grid-column: 1;
+        grid-row: 1;
+        padding-inline: $padding-sm;
+    }
+
+    .main-container {
+        grid-column: 1;
+        grid-row: 2;
+        padding-inline: $padding-sm;
+        padding-block: $padding-lg;
+    }
+
+    .footer {
+        grid-column: 1;
+        grid-row: 3;
+        padding-inline: $padding-sm;
+    }
+
+    @include for-mobile-layout {}
+
+    @include for-narrow-layout {}
+
+    @include for-normal-layout {}
+
+    @include for-wide-layout {}
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding: 20px;
+}
+
+/* GRIDS */
+.simple-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-gap: 10px;
+}

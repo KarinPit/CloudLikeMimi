@@ -1,0 +1,39 @@
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(227, 227, 227);
+
+
+    nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: $padding-sm;
+        height: 100%;
+
+        a {
+            display: flex;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+
+            &:hover {
+                text-decoration: none;
+            }
+
+            &.active {
+                font-weight: 600;
+            }
+        }
+    }
+
+    .user-options {
+        img {
+            width: rem(20px);
+            height: rem(20px);
+        }
+    }
+}
