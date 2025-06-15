@@ -14,7 +14,7 @@
     }
 
     p {
-        font-family: Plus Jakarta Sans;
+        font-family: Jakarta;
         color: #1B2128;
     }
 
@@ -32,6 +32,13 @@
         gap: 0 rem(6px);
         max-width: rem(1400px);
         width: 95%;
+
+        &.loading {
+            display: flex;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+        }
 
         .folder {
             position: relative;
@@ -67,7 +74,14 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 text-align: center;
+                font-family: Outfit;
+                font-size: rem(16px);
             }
+        }
+
+        .lotti-container {
+            grid-column: 1/-1;
+            width: rem(100px);
         }
     }
 
@@ -75,6 +89,12 @@
         .folder-gallery {
             grid-template-columns: repeat(3, 1fr);
             width: 90%;
+
+            .folder {
+                p {
+                    font-size: rem(18px);
+                }
+            }
         }
     }
 

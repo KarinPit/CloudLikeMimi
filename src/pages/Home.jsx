@@ -1,27 +1,29 @@
-import { useEffect, useRef, useState } from 'react'
-
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 
 // import { utilService } from '../services/util.service'
+import Lottie from 'react-lottie';
+import { loadFoldersData } from "../store/actions/folder.actions.js"
+import animationData from '../assets/animations/Loading.json';
+
 
 export default function Home() {
     const currentWidth = useSelector((storeState) => storeState.appModule.screenWidth)
     const smallScreen = useSelector((storeState) => storeState.appModule.smallScreen)
     const normalScreen = useSelector((storeState) => storeState.appModule.normalScreen)
     const wideScreen = useSelector((storeState) => storeState.appModule.wideScreen)
+    const folderData = useSelector((storeState) => storeState.folderModule.folderData)
+    const isLoading = useSelector((storeState) => storeState.folderModule.isLoading)
 
-    const folderData = [
-        'Documents',
-        'Projects',
-        'Photos',
-        'Downloads',
-        'Music',
-        'Videos',
-        'Archive',
-    ].map(name => ({
-        name,
-        color: '#D6E7F8',
-    }));
+    const defaultOptions = {
+        loop: true,
+        autoplay: true,
+        animationData: animationData,
+        rendererSettings: {
+            preserveAspectRatio: "xMidYMid slice"
+        }
+    };
+
 
     function arrangeFolders(folderData, colNum) {
         return folderData.map((folder, idx) => {
@@ -37,12 +39,32 @@ export default function Home() {
         })
     }
 
+    useEffect(() => {
+        loadFoldersData()
+    }, [])
+
+    if (isLoading) return <section className="home">
+        <div className='main-title'>
+            <h1>My Folders</h1>
+            <p>All your files, organized.</p>
+        </div>
+
+        <div className='folder-gallery loading'>
+            <div className='lotti-container'>
+                <Lottie
+                    options={defaultOptions}
+                />
+            </div>
+        </div>
+    </section>
+
     return (
         <section className="home">
             <div className='main-title'>
                 <h1>My Folders</h1>
                 <p>All your files, organized.</p>
             </div>
+
             <div className='folder-gallery'>
                 {currentWidth <= smallScreen ? arrangeFolders(folderData, 2)
                     : currentWidth > smallScreen && currentWidth <= normalScreen ? arrangeFolders(folderData, 3)

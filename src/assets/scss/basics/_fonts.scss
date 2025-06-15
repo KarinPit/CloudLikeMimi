@@ -13,8 +13,22 @@
 }
 
 @font-face {
-    font-family: 'Plus Jakarta Sans';
-    src: url('../../fonts/PlusJakartaSans/PlusJakartaSans-VariableFont_wght.ttf') format('truetype');
-    font-weight: 100 900;
+    font-family: 'Jakarta';
+    src: url('../../fonts/Plus_Jakarta_Sans/PlusJakartaSans-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Outfit';
+    src: url('../../assets/fonts/Outfit/static/Outfit-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Outfit';
+    src: url('../../assets/fonts/Outfit/static/Outfit-Regular.ttf') format('truetype');
+    font-weight: 700;
     font-style: normal;
 }
