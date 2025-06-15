@@ -1,10 +1,12 @@
 .home {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    justify-content: center;
     align-items: center;
-    gap: rem(20px);
     height: 100%;
+    margin: auto;
+    max-width: rem(1400px);
 
     h1 {
         font-size: rem(38px);
@@ -18,20 +20,45 @@
         color: #1B2128;
     }
 
-    .main-title {
-        text-align: center;
+    .folder-header {
+        grid-column: 1;
+        grid-row: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: rem(18px);
+        width: 100%;
 
-        p {
-            font-size: rem(14px);
+        .main-title {
+            // margin-inline-start: auto;
+            text-align: center;
+
+            p {
+                font-size: rem(14px);
+            }
+        }
+
+        .add-folder {
+            button {
+                padding: rem(10px);
+                border: rem(1px) solid grey;
+                border-radius: rem(8px);
+
+                &:hover {
+                    background: rgba(212, 212, 212, 0.5);
+                }
+            }
         }
     }
 
     .folder-gallery {
+        grid-column: 1;
+        grid-row: 2;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 0 rem(6px);
-        max-width: rem(1400px);
-        width: 95%;
+        width: 100%;
 
         &.loading {
             display: flex;
@@ -84,11 +111,31 @@
             width: rem(100px);
         }
     }
+}
 
-    @include for-narrow-layout {
+@include for-narrow-layout {
+    .home {
+        grid-template-columns: rem(20px) 1fr rem(20px);
+        grid-template-rows: auto 1fr;
+
+        .folder-header {
+            grid-column: 2;
+            flex-direction: row;
+            gap: 0;
+
+            .main-title {
+                margin-inline-start: auto;
+            }
+
+            .add-folder {
+                margin-inline-start: auto;
+            }
+        }
+
         .folder-gallery {
+            grid-column: 2;
             grid-template-columns: repeat(3, 1fr);
-            width: 90%;
+            width: 100%;
 
             .folder {
                 p {
@@ -97,18 +144,22 @@
             }
         }
     }
+}
 
-    @include for-normal-layout {
+@include for-normal-layout {
+    .home {
         .folder-gallery {
             grid-template-columns: repeat(4, 1fr);
-            width: 85%;
+            width: 100%;
         }
     }
+}
 
-    @include for-wide-layout {
+@include for-wide-layout {
+    .home {
         .folder-gallery {
             grid-template-columns: repeat(5, 1fr);
-            width: 80%;
+            width: 100%;
         }
     }
 }

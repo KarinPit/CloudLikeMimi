@@ -3,6 +3,9 @@ import { useSelector } from 'react-redux';
 
 // import { utilService } from '../services/util.service'
 import Lottie from 'react-lottie';
+import { showErrorMsg } from '../services/event-bus.service.js';
+import { saveFolder } from "../store/actions/folder.actions.js"
+
 import { loadFoldersData } from "../store/actions/folder.actions.js"
 import animationData from '../assets/animations/Loading.json';
 
@@ -25,7 +28,7 @@ export default function Home() {
     };
 
 
-    function arrangeFolders(folderData, colNum) {
+    function arrangeFolders(colNum) {
         return folderData.map((folder, idx) => {
             var shiftedIdx = idx + 1
             const colClass = `col-${(shiftedIdx % colNum) || colNum}`;
@@ -39,14 +42,29 @@ export default function Home() {
         })
     }
 
+    async function onAddFolder() {
+        try {
+            await saveFolder({})
+            showSuccessMsg('Robot added successfully')
+        } catch (err) {
+            console.log('Had issues adding robot', err);
+            showErrorMsg('Could not add robot')
+        }
+    }
+
     useEffect(() => {
         loadFoldersData()
     }, [])
 
     if (isLoading) return <section className="home">
-        <div className='main-title'>
-            <h1>My Folders</h1>
-            <p>All your files, organized.</p>
+        <div className='folder-header'>
+            <div className='main-title'>
+                <h1>My Folders</h1>
+                <p>All your files, organized.</p>
+            </div>
+            <div className='add-folder'>
+                <button onClick={onAddFolder}>+ Add folder</button>
+            </div>
         </div>
 
         <div className='folder-gallery loading'>
@@ -60,16 +78,21 @@ export default function Home() {
 
     return (
         <section className="home">
-            <div className='main-title'>
-                <h1>My Folders</h1>
-                <p>All your files, organized.</p>
+            <div className='folder-header'>
+                <div className='main-title'>
+                    <h1>My Folders</h1>
+                    <p>All your files, organized.</p>
+                </div>
+                <div className='add-folder'>
+                    <button onClick={onAddFolder}>+ Add folder</button>
+                </div>
             </div>
 
             <div className='folder-gallery'>
-                {currentWidth <= smallScreen ? arrangeFolders(folderData, 2)
-                    : currentWidth > smallScreen && currentWidth <= normalScreen ? arrangeFolders(folderData, 3)
-                        : currentWidth > normalScreen && currentWidth <= wideScreen ? arrangeFolders(folderData, 4)
-                            : arrangeFolders(folderData, 5)}
+                {currentWidth <= smallScreen ? arrangeFolders(2)
+                    : currentWidth > smallScreen && currentWidth <= normalScreen ? arrangeFolders(3)
+                        : currentWidth > normalScreen && currentWidth <= wideScreen ? arrangeFolders(4)
+                            : arrangeFolders(5)}
             </div>
         </section>
     )

@@ -1,6 +1,6 @@
 import { folderService } from "../../services/folder.service.js";
 
-import { ADD_FAVORITE, REMOVE_FAVORITE, SET_FOLDERS, SET_IS_LOADING } from "../reducers/folder.reducer.js"
+import { ADD_FAVORITE, ADD_FOLDER, REMOVE_FAVORITE, SET_FOLDERS, SET_IS_LOADING, UPDATE_FOLDER } from "../reducers/folder.reducer.js"
 
 import { store } from "../store.js"
 
@@ -17,3 +17,13 @@ export async function loadFoldersData() {
     }
 }
 
+export async function saveFolder(folder) {
+    try {
+        const type = folder.id ? UPDATE_FOLDER : ADD_FOLDER
+        const savedFolder = await folderService.save(folder)
+        store.dispatch({ type, folder: savedFolder })
+    } catch (err) {
+        console.log('Had issues saving robots', err)
+        throw err
+    }
+}

@@ -6,7 +6,7 @@ const STORAGE_KEY_FOLDER_DATA = 'folderData'
 export const folderService = {
 	getFolderData,
 	getById,
-	saveFolder,
+	save,
 	remove,
 	update,
 }
@@ -23,8 +23,8 @@ async function getById(folderId) {
 	return folder
 }
 
-function remove(folderId) {
-	return storageService.remove(STORAGE_KEY_FOLDER_DATA, folderId)
+async function remove(folderId) {
+	return await storageService.remove(STORAGE_KEY_FOLDER_DATA, folderId)
 }
 
 async function update(folderToUpdate) {
@@ -33,10 +33,13 @@ async function update(folderToUpdate) {
 	return updatedUser
 }
 
-async function saveFolder(folder) {
-	folder = { id: folder.id, name: folder.name, color: folder.color }
-	const savedFolder = await storageService.post(STORAGE_KEY_FOLDER_DATA, folder)
-	return savedFolder
+async function save(folderToSave) {
+	if (folderToSave.id) {
+		return await storageService.put(STORAGE_KEY_FOLDER_DATA, folderToSave)
+	} else {
+		folderToSave = { name: 'New folder', color: '#D6E7F8' }
+		return await storageService.post(STORAGE_KEY_FOLDER_DATA, folderToSave)
+	}
 }
 
 function _createFolderData() {
