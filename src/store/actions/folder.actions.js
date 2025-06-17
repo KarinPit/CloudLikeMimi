@@ -4,7 +4,6 @@ import { ADD_FAVORITE, ADD_FOLDER, REMOVE_FAVORITE, SET_FOLDERS, SET_IS_LOADING,
 
 import { store } from "../store.js"
 
-
 export async function loadFoldersData() {
     store.dispatch({ type: SET_IS_LOADING, isLoading: true })
     try {

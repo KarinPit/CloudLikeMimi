@@ -7,9 +7,10 @@ import { store } from './store/store'
 import { useSelector } from 'react-redux';
 import { setScreenWidth } from "./store/actions/app.actions"
 
-import Home from './pages/Home'
 import AppHeader from './cmps/AppHeader';
 import Footer from './cmps/Footer';
+import Home from './pages/Home'
+import FolderIndex from './pages/FolderIndex';
 
 
 export function App() {
@@ -33,6 +34,7 @@ export function App() {
                     <main className='main-container'>
                         <Routes>
                             <Route path="/" element={<Home />} />
+                            <Route path="/folder/:folderId?" element={<FolderIndex />} />
                         </Routes>
                     </main>
                     <Footer />

@@ -1,13 +1,13 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 
-// import { utilService } from '../services/util.service'
-import Lottie from 'react-lottie';
+import LoadingAnim from '../cmps/LoadingAnim.jsx';
+
 import { showErrorMsg } from '../services/event-bus.service.js';
 import { saveFolder } from "../store/actions/folder.actions.js"
 
 import { loadFoldersData } from "../store/actions/folder.actions.js"
-import animationData from '../assets/animations/Loading.json';
+import { NavLink } from 'react-router-dom';
 
 
 export default function Home() {
@@ -18,27 +18,21 @@ export default function Home() {
     const folderData = useSelector((storeState) => storeState.folderModule.folderData)
     const isLoading = useSelector((storeState) => storeState.folderModule.isLoading)
 
-    const defaultOptions = {
-        loop: true,
-        autoplay: true,
-        animationData: animationData,
-        rendererSettings: {
-            preserveAspectRatio: "xMidYMid slice"
-        }
-    };
-
 
     function arrangeFolders(colNum) {
         return folderData.map((folder, idx) => {
             var shiftedIdx = idx + 1
             const colClass = `col-${(shiftedIdx % colNum) || colNum}`;
 
-            return (<div key={shiftedIdx} className={`folder ${colClass} mobile`}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="files" style={{ color: folder.color }}>
-                    <path fill="currentColor" d="M19 21.5H5a3.003 3.003 0 0 1-3-3v-13a3.003 3.003 0 0 1 3-3h4.559a2.996 2.996 0 0 1 2.845 2.05l.317.95H19a3.003 3.003 0 0 1 3 3v10a3.003 3.003 0 0 1-3 3Z"></path>
-                </svg>
-                <p>{folder.name}</p>
-            </div>)
+            return (
+                <NavLink key={shiftedIdx} to={`/folder/${folder.id}`}>
+                    <div className={`folder ${colClass} mobile`}>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="files" style={{ color: folder.color }}>
+                            <path fill="currentColor" d="M19 21.5H5a3.003 3.003 0 0 1-3-3v-13a3.003 3.003 0 0 1 3-3h4.559a2.996 2.996 0 0 1 2.845 2.05l.317.95H19a3.003 3.003 0 0 1 3 3v10a3.003 3.003 0 0 1-3 3Z"></path>
+                        </svg>
+                        <p>{folder.name}</p>
+                    </div>
+                </NavLink>)
         })
     }
 
@@ -68,11 +62,7 @@ export default function Home() {
         </div>
 
         <div className='folder-gallery loading'>
-            <div className='lotti-container'>
-                <Lottie
-                    options={defaultOptions}
-                />
-            </div>
+            <LoadingAnim />
         </div>
     </section>
 
