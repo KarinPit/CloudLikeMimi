@@ -21,7 +21,7 @@
     .folder-info {
         grid-column: 1;
         grid-row: 2;
-
+        
         &.mobile {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -58,6 +58,10 @@
                 }
             }
         }
+
+        .lotti-container {
+            grid-column: 1/-1;
+        }
     }
 
     .empty-folder {
@@ -67,7 +71,7 @@
         gap: rem(10px);
         width: 100%;
         height: fit-content;
-        
+
         img {
             width: 50vw;
             min-width: rem(100px);
@@ -83,6 +87,7 @@
         display: flex;
         flex-direction: column;
         gap: rem(10px);
+        height: 100%;
 
         .file-info {
             display: flex;

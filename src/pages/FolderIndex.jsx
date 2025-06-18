@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router"
 import { useSelector } from "react-redux"
 
 import { folderService } from "../services/folder.service"
-import { fileService } from "../services/file.service"
+import { deleteFile, getFilesByFolderId } from "../store/actions/file.actions"
 
 import LoadingAnim from "../cmps/LoadingAnim"
 import downloadIcon from "../assets/imgs/FolderIndex/download.svg"
@@ -18,23 +18,22 @@ import EmptyFolder from "../assets/imgs/FolderIndex/empty-wallet.svg"
 export default function FolderIndex() {
     const currentWidth = useSelector((storeState) => storeState.appModule.screenWidth)
     const smallScreen = useSelector((storeState) => storeState.appModule.smallScreen)
-    const normalScreen = useSelector((storeState) => storeState.appModule.normalScreen)
-    const wideScreen = useSelector((storeState) => storeState.appModule.wideScreen)
+    const files = useSelector((storeState) => storeState.fileModule.files)
+
     const [folder, setFolder] = useState(null)
-    const [files, setFiles] = useState(null)
+    // const [files, setFiles] = useState(null)
     const params = useParams()
     const navigate = useNavigate()
 
     useEffect(() => {
         loadFolder()
+        loadFiles(params.folderId)
     }, [params.folderId])
 
     async function loadFolder() {
         try {
             const folder = await folderService.getById(params.folderId)
-            const files = await fileService.getByFolderId(params.folderId)
             setFolder(folder)
-            setFiles(files)
         }
         catch (err) {
             navigate("/")
@@ -42,12 +41,17 @@ export default function FolderIndex() {
         }
     }
 
-    async function downloadFile() {
-        console.log('downloading file');
+    async function loadFiles(folderId) {
+        try {
+            await getFilesByFolderId(folderId)
+        }
+        catch (err) {
+            console.log('Had issues loading files\nError:', err);
+        }
     }
 
-    async function deleteFile() {
-        console.log('deleting file');
+    async function downloadFile() {
+        console.log('downloading file');
     }
 
     function getExtensionSVG(extension, cName) {
@@ -96,7 +100,7 @@ export default function FolderIndex() {
                 :
                 <div className="folder-info">
                     {files.map((file, idx) => {
-                        return (<div className="file-info">
+                        return (<div key={idx} className="file-info">
                             {getExtensionSVG(file.extension, "file-img")}
                             <table>
                                 <thead>
@@ -118,7 +122,7 @@ export default function FolderIndex() {
                                 <button onClick={() => downloadFile('abcd123')}>
                                     <img src={downloadIcon}></img>
                                 </button>
-                                <button onClick={() => deleteFile('abcd123')}>
+                                <button onClick={() => deleteFile(file.id)}>
                                     <img src={trashIcon}></img>
                                 </button>
                             </div>

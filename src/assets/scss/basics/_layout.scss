@@ -21,6 +21,12 @@
         padding-inline: $padding-sm;
     }
 
+    .lotti-container {
+        grid-column: 1/-1;
+        width: rem(100px);
+        margin: auto;
+    }
+
     @include for-mobile-layout {}
 
     @include for-narrow-layout {}
