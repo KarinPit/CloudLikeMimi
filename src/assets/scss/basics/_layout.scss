@@ -1,6 +1,11 @@
 .main-app {
+    position: relative;
     font-family: Arial;
     @include grid_layout();
+
+    // &.open-modal {
+        
+    // }
 
     .app-header {
         grid-column: 1;

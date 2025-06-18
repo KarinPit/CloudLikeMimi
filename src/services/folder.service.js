@@ -9,6 +9,7 @@ export const folderService = {
 	save,
 	remove,
 	update,
+	getDefaultFolder
 }
 
 window.folderService = folderService
@@ -37,10 +38,18 @@ async function save(folderToSave) {
 	if (folderToSave.id) {
 		return await storageService.put(STORAGE_KEY_FOLDER_DATA, folderToSave)
 	} else {
-		folderToSave = { name: 'New folder', color: '#D6E7F8' }
+		// console.log(folderToSave);
 		return await storageService.post(STORAGE_KEY_FOLDER_DATA, folderToSave)
 	}
 }
+
+function getDefaultFolder(name = 'New folder', color = '#D6E7F8') {
+	return {
+		name,
+		color,
+	}
+}
+
 
 function _createFolderData() {
 	let folderData = utilService.loadFromStorage(STORAGE_KEY_FOLDER_DATA)

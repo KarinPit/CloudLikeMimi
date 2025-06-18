@@ -11,10 +11,11 @@ import AppHeader from './cmps/AppHeader';
 import Footer from './cmps/Footer';
 import Home from './pages/Home'
 import FolderIndex from './pages/FolderIndex';
-
+import AddFolderModal from './cmps/AddFolderModal';
 
 export function App() {
     const currentWidth = useSelector((storeState) => storeState.appModule.screenWidth)
+    const isOpenAddFolderModal = useSelector((storeState) => storeState.appModule.isOpenAddFolderModal)
 
     function onChangeWidth() {
         const currentWidth = window.innerWidth
@@ -29,8 +30,9 @@ export function App() {
     return (
         <Provider store={store}>
             <Router>
-                <section className='main-app'>
+                <section className={`main-app ${isOpenAddFolderModal ? 'open-modal' : ''}`}>
                     <AppHeader />
+                    {isOpenAddFolderModal ? <AddFolderModal /> : ''}
                     <main className='main-container'>
                         <Routes>
                             <Route path="/" element={<Home />} />

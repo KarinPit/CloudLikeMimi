@@ -1,11 +1,11 @@
-import { SET_MODAL_DATA, SET_SCREEN_WIDTH } from "../reducers/app.reducer";
+import { SET_IS_OPEN_ADD_FOLDER_MODAL, SET_SCREEN_WIDTH } from "../reducers/app.reducer";
 import { store } from "../store";
 
 
-export function onToggleModal(modalData = null) {
+export function onToggleAddFolderModal(isOpen = null) {
     store.dispatch({
-        type: SET_MODAL_DATA,
-        modalData
+        type: SET_IS_OPEN_ADD_FOLDER_MODAL,
+        isOpen
     })
 }
 
