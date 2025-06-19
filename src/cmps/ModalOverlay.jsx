@@ -1,8 +1,8 @@
-import { onToggleAddFolderModal } from "../store/actions/app.actions"
+import { onToggleModal } from "../store/actions/app.actions"
 
-export default function ModalOverlay() {
+export default function ModalOverlay({ modalType }) {
     return (
-        <div className="modal-overlay" onClick={() => onToggleAddFolderModal()}>
+        <div className="modal-overlay" onClick={() => onToggleModal(modalType, null)}>
         </div>
     )
 }

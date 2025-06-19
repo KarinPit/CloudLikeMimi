@@ -6,6 +6,7 @@ import { folderService } from "../services/folder.service"
 import { deleteFile, getFilesByFolderId } from "../store/actions/file.actions"
 
 import LoadingAnim from "../cmps/LoadingAnim"
+import editIcon from "../assets/imgs/FolderIndex/edit.svg"
 import downloadIcon from "../assets/imgs/FolderIndex/download.svg"
 import trashIcon from "../assets/imgs/FolderIndex/trash.svg"
 import vertDotsIcon from "../assets/imgs/FolderIndex/dots.svg"
@@ -14,30 +15,41 @@ import txtIcon from "../assets/imgs/FolderIndex/txt.svg"
 import pdfIcon from "../assets/imgs/FolderIndex/pdf.svg"
 import xlsxIcon from "../assets/imgs/FolderIndex/xlsx.svg"
 import EmptyFolder from "../assets/imgs/FolderIndex/empty-wallet.svg"
+import { onToggleModal } from "../store/actions/app.actions"
+import { loadFolderById } from "../store/actions/folder.actions"
 
 export default function FolderIndex() {
     const currentWidth = useSelector((storeState) => storeState.appModule.screenWidth)
     const smallScreen = useSelector((storeState) => storeState.appModule.smallScreen)
     const files = useSelector((storeState) => storeState.fileModule.files)
-
-    const [folder, setFolder] = useState(null)
-    // const [files, setFiles] = useState(null)
+    const currentFolder = useSelector((storeState) => storeState.folderModule.currentFolder)
+    const isLoading = useSelector((storeState) => storeState.folderModule.isLoading)
     const params = useParams()
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     useEffect(() => {
-        loadFolder()
+        loadFolderById(params.folderId)
         loadFiles(params.folderId)
     }, [params.folderId])
 
-    async function loadFolder() {
+    // async function loadFolder() {
+    //     try {
+    //         const folder = await folderService.getById(params.folderId)
+    //         setFolder(folder)
+    //     }
+    //     catch (err) {
+    //         navigate("/")
+    //         console.log('Had issues loading folder\nRedirecting to home page\nError:', err);
+    //     }
+    // }
+
+    async function onEditFolder() {
         try {
-            const folder = await folderService.getById(params.folderId)
-            setFolder(folder)
+            onToggleModal('editFolder', true)
+            // setCurrentFolder(folder)
         }
         catch (err) {
-            navigate("/")
-            console.log('Had issues loading folder\nRedirecting to home page\nError:', err);
+            console.log('Had issues editing folder:\n', err);
         }
     }
 
@@ -71,15 +83,21 @@ export default function FolderIndex() {
         }
     }
 
-    if (!folder) return (
+    if (isLoading) return (
         <section className="folder-info">
             <LoadingAnim />
         </section>
     )
     return (
         <section className="folder-index">
-            <h1>{`${folder.name}`}</h1>
+            <div className="folder-title">
+                <h1>{`${currentFolder.name}`}</h1>
+                <button onClick={onEditFolder}>
+                    <img src={editIcon}></img>
+                </button>
+            </div>
             {files.length > 0 ? currentWidth <= smallScreen ?
+                // layout for small screens
                 <div className="folder-info mobile">
                     {files.map((file, idx) => {
                         return (
@@ -98,6 +116,7 @@ export default function FolderIndex() {
 
                 </div>
                 :
+                // layout for normal and above screens
                 <div className="folder-info">
                     {files.map((file, idx) => {
                         return (<div key={idx} className="file-info">

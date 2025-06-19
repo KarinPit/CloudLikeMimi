@@ -1,6 +1,7 @@
 export const ADD_FAVORITE = 'ADD_FAVORITE'
 export const REMOVE_FAVORITE = 'REMOVE_FAVORITE'
 export const SET_FOLDERS = 'SET_FOLDERS'
+export const SET_CURRENT_FOLDER = 'SET_CURRENT_FOLDER'
 export const ADD_FOLDER = 'ADD_FOLDER'
 export const UPDATE_FOLDER = 'UPDATE_FOLDER'
 export const SET_IS_LOADING = 'SET_IS_LOADING'
@@ -8,6 +9,7 @@ export const SET_IS_LOADING = 'SET_IS_LOADING'
 const initialState = {
     favorites: [],
     folderData: [],
+    currentFolder: null,
     isLoading: true
 }
 
@@ -24,6 +26,8 @@ export function folderReducer(state = initialState, cmd = {}) {
             }
         case SET_FOLDERS:
             return { ...state, folderData: cmd.folderData }
+        case SET_CURRENT_FOLDER:
+            return { ...state, currentFolder: cmd.folder }
         case ADD_FOLDER:
             return {
                 ...state,

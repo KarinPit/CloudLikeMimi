@@ -5,9 +5,11 @@ import { saveFolder } from "../store/actions/folder.actions";
 import { onToggleModal } from "../store/actions/app.actions";
 
 import closeIcon from "../assets/imgs/AddFolderModal/close.svg"
+import { useSelector } from "react-redux";
 
-export default function AddFolderModal() {
-    const [folder, setFolder] = useState(folderService.getDefaultFolder())
+export default function EditFolderModal() {
+    const currentFolder = useSelector((storeState) => storeState.folderModule.currentFolder)
+    const [folder, setFolder] = useState(currentFolder)
 
     function handleChange({ target }) {
         let { value, type, name: field } = target
@@ -15,7 +17,7 @@ export default function AddFolderModal() {
         setFolder(prevFolder => ({ ...prevFolder, [field]: value }))
     }
 
-    async function onCreateFolder(ev) {
+    async function onEditFolder(ev) {
         ev.preventDefault()
 
         try {
@@ -25,28 +27,28 @@ export default function AddFolderModal() {
                 folderName = 'New folder'
                 setFolder(prevFolder => ({ ...prevFolder, name: folderName }));
             }
-            await saveFolder({ name: folderName, color: folderColor })
+            await saveFolder({ id: folder.id, name: folderName, color: folderColor })
             setFolder(folderService.getDefaultFolder());
-            onToggleModal('addFolder', null)
+            onToggleModal('editFolder', null)
 
         } catch (err) {
-            console.log('Had issues creating new folder', err)
+            console.log('Had issues editing folder', err)
         }
     }
 
     return (
-        <div className="add-folder-modal">
+        <div className="edit-folder-modal">
             <div className="modal-container">
-                <h2>Create new folder</h2>
-                <button className="close-modal" onClick={() => onToggleModal('addFolder', null)}>
+                <h2>Edit folder</h2>
+                <button className="close-modal" onClick={() => onToggleModal('editFolder', null)}>
                     <img src={closeIcon}></img>
                 </button>
-                <form onSubmit={onCreateFolder}>
+                <form onSubmit={onEditFolder}>
                     <div className="input-container">
                         <input className="input-name" type="text" id="name" name="name" value={folder.name} onChange={handleChange} />
                         <input className="input-color" type="color" id="color" name="color" value={folder.color} onChange={handleChange} />
                     </div>
-                    <button>Create folder</button>
+                    <button>Save changes</button>
                 </form>
             </div>
         </div>

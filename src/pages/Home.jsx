@@ -7,7 +7,7 @@ import { showErrorMsg } from '../services/event-bus.service.js';
 import { saveFolder } from "../store/actions/folder.actions.js"
 
 import { loadFoldersData } from "../store/actions/folder.actions.js"
-import { onToggleAddFolderModal } from '../store/actions/app.actions.js';
+import { onToggleModal } from '../store/actions/app.actions.js';
 import { NavLink } from 'react-router-dom';
 
 
@@ -40,7 +40,7 @@ export default function Home() {
     async function onAddFolder() {
         try {
             // await saveFolder({})
-            onToggleAddFolderModal(true)
+            onToggleModal('addFolder', true)
             showSuccessMsg('Robot added successfully')
         } catch (err) {
             console.log('Had issues adding robot', err);

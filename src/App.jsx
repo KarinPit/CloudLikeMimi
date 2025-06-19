@@ -12,15 +12,29 @@ import Footer from './cmps/Footer';
 import Home from './pages/Home'
 import FolderIndex from './pages/FolderIndex';
 import AddFolderModal from './cmps/AddFolderModal';
+import EditFolderModal from './cmps/EditFolderModal';
 import ModalOverlay from './cmps/ModalOverlay';
 
 export function App() {
     const currentWidth = useSelector((storeState) => storeState.appModule.screenWidth)
-    const isOpenAddFolderModal = useSelector((storeState) => storeState.appModule.isOpenAddFolderModal)
+    const modals = useSelector((storeState) => storeState.appModule.modals)
+    const openModalType = Object.entries(modals).find(([key, isOpen]) => isOpen)?.[0]
+
 
     function onChangeWidth() {
         const currentWidth = window.innerWidth
         setScreenWidth(currentWidth)
+    }
+
+    function getModal() {
+        switch (openModalType) {
+            case 'addFolder':
+                return <AddFolderModal />
+            case 'editFolder':
+                return <EditFolderModal />
+            default:
+                return null
+        }
     }
 
     useEffect(() => {
@@ -31,10 +45,10 @@ export function App() {
     return (
         <Provider store={store}>
             <Router>
-                <section className={`main-app ${isOpenAddFolderModal ? 'open-modal' : ''}`}>
+                <section className={`main-app ${openModalType ? 'open-modal' : ''}`}>
                     <AppHeader />
-                    {isOpenAddFolderModal ? <AddFolderModal /> : ''}
-                    {isOpenAddFolderModal ? <ModalOverlay /> : ''}
+                    {openModalType && getModal()}
+                    {openModalType && <ModalOverlay modalType={openModalType} />}
                     <main className='main-container'>
                         <Routes>
                             <Route path="/" element={<Home />} />

@@ -8,20 +8,34 @@
     margin: auto;
     max-width: rem(1400px);
 
-    h1 {
-        grid-column: 1;
-        grid-row: 1;
-        font-size: rem(38px);
-        font-weight: 500;
-        font-family: Domine;
-        text-align: center;
-        padding-block-end: rem(6px);
+    .folder-title {
+        display: flex;
+        justify-content: center;
+        gap: rem(8px);
+        width: 100%;
+
+        h1 {
+            grid-column: 1;
+            grid-row: 1;
+            font-size: rem(38px);
+            font-weight: 500;
+            font-family: Domine;
+            text-align: center;
+            padding-block-end: rem(6px);
+        }
+
+        button {
+            img {
+                width: rem(20px);
+                height: auto;
+            }
+        }
     }
 
     .folder-info {
         grid-column: 1;
         grid-row: 2;
-        
+
         &.mobile {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
