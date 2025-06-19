@@ -1,15 +1,19 @@
 import { useState } from "react";
 import { folderService } from "../services/folder.service";
 
-import { saveFolder } from "../store/actions/folder.actions";
+import { removeFolder, saveFolder } from "../store/actions/folder.actions";
 import { onToggleModal } from "../store/actions/app.actions";
 
 import closeIcon from "../assets/imgs/AddFolderModal/close.svg"
 import { useSelector } from "react-redux";
 
+import trashIcon from "../assets/imgs/FolderIndex/trash_red.svg"
+import { useNavigate } from "react-router";
+
 export default function EditFolderModal() {
     const currentFolder = useSelector((storeState) => storeState.folderModule.currentFolder)
     const [folder, setFolder] = useState(currentFolder)
+    const navigate = useNavigate()
 
     function handleChange({ target }) {
         let { value, type, name: field } = target
@@ -36,6 +40,21 @@ export default function EditFolderModal() {
         }
     }
 
+    async function onRemoveFolder() {
+        console.log('removing folder')
+
+        try {
+            await removeFolder(folder.id)
+            onToggleModal('editFolder', null)
+            // navigate("/")
+
+        } catch (err) {
+            console.log('Had issues editing folder', err)
+        } finally {
+            navigate("/")
+        }
+    }
+
     return (
         <div className="edit-folder-modal">
             <div className="modal-container">
@@ -50,6 +69,10 @@ export default function EditFolderModal() {
                     </div>
                     <button>Save changes</button>
                 </form>
+                <button className="delete-folder" onClick={onRemoveFolder}>
+                    <img src={trashIcon}></img>
+                    <p>Delete folder permanently</p>
+                </button>
             </div>
         </div>
     )

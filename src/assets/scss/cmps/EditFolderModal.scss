@@ -41,6 +41,19 @@
                     height: auto;
                 }
             }
+
+            &.delete-folder {
+                display: flex;
+                align-items: center;
+                grid-column: 2;
+                grid-row: 3;
+                width: fit-content;
+
+                img {
+                    width: rem(30px);
+                    height: auto;
+                }
+            }
         }
 
         form {

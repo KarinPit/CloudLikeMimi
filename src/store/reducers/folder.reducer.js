@@ -4,6 +4,7 @@ export const SET_FOLDERS = 'SET_FOLDERS'
 export const SET_CURRENT_FOLDER = 'SET_CURRENT_FOLDER'
 export const ADD_FOLDER = 'ADD_FOLDER'
 export const UPDATE_FOLDER = 'UPDATE_FOLDER'
+export const REMOVE_FOLDER = 'REMOVE_FOLDER'
 export const SET_IS_LOADING = 'SET_IS_LOADING'
 
 const initialState = {
@@ -37,6 +38,12 @@ export function folderReducer(state = initialState, cmd = {}) {
             return {
                 ...state,
                 folderData: state.folderData.map(folder => folder.id === cmd.folder.id ? cmd.folder : folder)
+            }
+        case REMOVE_FOLDER:
+            return {
+                ...state,
+                folderData: state.folderData.filter(folder => folder.id !== cmd.id)
+                // favorites: state.favorites.filter(folder => folder.id !== cmd.userId)
             }
         case SET_IS_LOADING:
             return {
