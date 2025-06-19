@@ -12,6 +12,7 @@ import Footer from './cmps/Footer';
 import Home from './pages/Home'
 import FolderIndex from './pages/FolderIndex';
 import AddFolderModal from './cmps/AddFolderModal';
+import ModalOverlay from './cmps/ModalOverlay';
 
 export function App() {
     const currentWidth = useSelector((storeState) => storeState.appModule.screenWidth)
@@ -33,6 +34,7 @@ export function App() {
                 <section className={`main-app ${isOpenAddFolderModal ? 'open-modal' : ''}`}>
                     <AppHeader />
                     {isOpenAddFolderModal ? <AddFolderModal /> : ''}
+                    {isOpenAddFolderModal ? <ModalOverlay /> : ''}
                     <main className='main-container'>
                         <Routes>
                             <Route path="/" element={<Home />} />

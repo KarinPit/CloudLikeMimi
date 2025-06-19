@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { folderService } from "../services/folder.service";
+
 import { saveFolder } from "../store/actions/folder.actions";
+import { onToggleAddFolderModal } from "../store/actions/app.actions";
+
+import closeIcon from "../assets/imgs/AddFolderModal/close.svg"
 
 export default function AddFolderModal() {
     const [folder, setFolder] = useState(folderService.getDefaultFolder())
@@ -23,6 +27,7 @@ export default function AddFolderModal() {
             }
             await saveFolder({ name: folderName, color: folderColor })
             setFolder(folderService.getDefaultFolder());
+            onToggleAddFolderModal()
 
         } catch (err) {
             console.log('Had issues creating new folder', err)
@@ -31,14 +36,19 @@ export default function AddFolderModal() {
 
     return (
         <div className="add-folder-modal">
-            <h2>Create new folder</h2>
-            <form onSubmit={onCreateFolder}>
-                <div className="input-container">
-                    <input className="input-name" type="text" id="name" name="name" value={folder.name} onChange={handleChange} />
-                    <input className="input-color" type="color" id="color" name="color" value={folder.color} onChange={handleChange} />
-                </div>
-                <button>Create folder</button>
-            </form>
+            <div className="modal-container">
+                <h2>Create new folder</h2>
+                <button className="close-modal" onClick={() => onToggleAddFolderModal()}>
+                    <img src={closeIcon}></img>
+                </button>
+                <form onSubmit={onCreateFolder}>
+                    <div className="input-container">
+                        <input className="input-name" type="text" id="name" name="name" value={folder.name} onChange={handleChange} />
+                        <input className="input-color" type="color" id="color" name="color" value={folder.color} onChange={handleChange} />
+                    </div>
+                    <button>Create folder</button>
+                </form>
+            </div>
         </div>
     )
 }
