@@ -41,17 +41,12 @@ export default function EditFolderModal() {
     }
 
     async function onRemoveFolder() {
-        console.log('removing folder')
-
         try {
-            await removeFolder(folder.id)
-            onToggleModal('editFolder', null)
-            // navigate("/")
+            // await removeFolder(folder.id)
+            onToggleModal({ editFolder: null, confirmModal: { isOpen: true, message: `delete ${folder.name}`, folderId: folder.id, toExec: removeFolder, toNavigate: "/" } })
 
         } catch (err) {
             console.log('Had issues editing folder', err)
-        } finally {
-            navigate("/")
         }
     }
 

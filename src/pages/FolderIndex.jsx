@@ -83,7 +83,7 @@ export default function FolderIndex() {
         }
     }
 
-    if (isLoading) return (
+    if (isLoading || !currentFolder) return (
         <section className="folder-info">
             <LoadingAnim />
         </section>

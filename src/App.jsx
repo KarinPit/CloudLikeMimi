@@ -13,13 +13,15 @@ import Home from './pages/Home'
 import FolderIndex from './pages/FolderIndex';
 import AddFolderModal from './cmps/AddFolderModal';
 import EditFolderModal from './cmps/EditFolderModal';
+import ConfirmModal from "./cmps/ConfirmModal"
 import ModalOverlay from './cmps/ModalOverlay';
 
 export function App() {
     const currentWidth = useSelector((storeState) => storeState.appModule.screenWidth)
     const modals = useSelector((storeState) => storeState.appModule.modals)
-    const openModalType = Object.entries(modals).find(([key, isOpen]) => isOpen)?.[0]
-
+    const [openModalType, modalValue] = Object.entries(modals).find(
+        ([_, val]) => val && (val.isOpen || val === true)
+    ) || []
 
     function onChangeWidth() {
         const currentWidth = window.innerWidth
@@ -32,6 +34,8 @@ export function App() {
                 return <AddFolderModal />
             case 'editFolder':
                 return <EditFolderModal />
+            case 'confirmModal':
+                return <ConfirmModal {...modalValue} />
             default:
                 return null
         }
