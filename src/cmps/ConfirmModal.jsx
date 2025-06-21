@@ -1,18 +1,20 @@
 import { useNavigate } from "react-router";
 import { onToggleModal } from "../store/actions/app.actions";
+import { useRef } from "react";
 
 
 export default function ConfirmModal({ message, toExec, folderId, toNavigate }) {
     const navigate = useNavigate()
 
-    async function onConfirm() {
-        if (typeof toExec === 'function') {
+    async function onConfirm(ev) {
+        const clickedOption = ev.target.innerText
+
+        if (clickedOption === 'Yes' && typeof toExec === 'function') {
             await toExec(folderId)
             if (toNavigate) {
                 navigate(toNavigate)
             }
         }
-
         onToggleModal({ confirmModal: null }) // Close modal
     }
 

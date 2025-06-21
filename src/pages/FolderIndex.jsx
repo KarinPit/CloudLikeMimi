@@ -2,8 +2,9 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router"
 import { useSelector } from "react-redux"
 
+import UploadWidget from '../cmps/UploadWidget'
 import { folderService } from "../services/folder.service"
-import { deleteFile, getFilesByFolderId } from "../store/actions/file.actions"
+import { deleteFile, getFilesByFolderId, uploadFileToCloud } from "../store/actions/file.actions"
 
 import LoadingAnim from "../cmps/LoadingAnim"
 import editIcon from "../assets/imgs/FolderIndex/edit.svg"
@@ -25,28 +26,15 @@ export default function FolderIndex() {
     const currentFolder = useSelector((storeState) => storeState.folderModule.currentFolder)
     const isLoading = useSelector((storeState) => storeState.folderModule.isLoading)
     const params = useParams()
-    // const navigate = useNavigate()
 
     useEffect(() => {
         loadFolderById(params.folderId)
         loadFiles(params.folderId)
     }, [params.folderId])
 
-    // async function loadFolder() {
-    //     try {
-    //         const folder = await folderService.getById(params.folderId)
-    //         setFolder(folder)
-    //     }
-    //     catch (err) {
-    //         navigate("/")
-    //         console.log('Had issues loading folder\nRedirecting to home page\nError:', err);
-    //     }
-    // }
-
     async function onEditFolder() {
         try {
             onToggleModal('editFolder', true)
-            // setCurrentFolder(folder)
         }
         catch (err) {
             console.log('Had issues editing folder:\n', err);
@@ -56,6 +44,15 @@ export default function FolderIndex() {
     async function loadFiles(folderId) {
         try {
             await getFilesByFolderId(folderId)
+        }
+        catch (err) {
+            console.log('Had issues loading files\nError:', err);
+        }
+    }
+
+    async function uploadFile(ev) {
+        try {
+            await uploadFileToCloud(ev)
         }
         catch (err) {
             console.log('Had issues loading files\nError:', err);
@@ -82,7 +79,7 @@ export default function FolderIndex() {
                 return null
         }
     }
-
+    // loading animation until data is collected
     if (isLoading || !currentFolder) return (
         <section className="folder-info">
             <LoadingAnim />
@@ -95,6 +92,10 @@ export default function FolderIndex() {
                 <button onClick={onEditFolder}>
                     <img src={editIcon}></img>
                 </button>
+                <div className='add-file'>
+                    <UploadWidget folderId={currentFolder.id} />
+                    {/* <button onClick={uploadFile}>+ Add file</button> */}
+                </div>
             </div>
             {files.length > 0 ? currentWidth <= smallScreen ?
                 // layout for small screens
@@ -103,7 +104,6 @@ export default function FolderIndex() {
                         return (
                             <div key={idx} className="file-info">
                                 <div className="img-container">
-                                    {/* {console.log(file.extension)} */}
                                     {getExtensionSVG(file.extension, "file-img")}
                                     <button>
                                         <img className="vert-dots" src={vertDotsIcon}></img>

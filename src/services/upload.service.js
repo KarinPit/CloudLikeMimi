@@ -1,11 +1,11 @@
 export const uploadService = {
-    uploadImg
+    uploadImg, uploadFileToCloud
 }
 
 async function uploadImg(ev) {
-    const CLOUD_NAME = "dbwxscqid"
-    const UPLOAD_PRESET = "g1ijphbe"
-    const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
+    const CLOUD_NAME = "dn2zm8wqn"
+    const UPLOAD_PRESET = "mimiWebsite"
+    const UPLOAD_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/${UPLOAD_PRESET}/`
 
     try {
         // const filesPrms = files.map(() => {
@@ -31,4 +31,8 @@ async function uploadImg(ev) {
         console.error('Failed to upload', err)
         throw err
     }
+}
+
+async function uploadFileToCloud(ev) {
+
 }

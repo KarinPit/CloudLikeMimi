@@ -1,4 +1,5 @@
 import { fileService } from "../../services/file.service.js";
+import { uploadService } from "../../services/upload.service.js";
 
 import { REMOVE_FILE, SET_FILES, SET_IS_LOADING } from "../reducers/file.reducer.js"
 
@@ -33,6 +34,15 @@ export async function deleteFile(fileId) {
         store.dispatch({ type: REMOVE_FILE, fileId: fileId })
     } catch (err) {
         console.log('Had issues removing file', err)
+    }
+}
+
+export async function uploadFileToCloud(ev) {
+    try {
+        uploadService.uploadFileToCloud(ev)
+    }
+    catch (err) {
+        console.log('Had issues uploading file', err)
         throw err
     }
 }

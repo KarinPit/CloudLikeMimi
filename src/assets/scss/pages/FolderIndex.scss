@@ -11,6 +11,7 @@
     .folder-title {
         display: flex;
         justify-content: center;
+        align-items: center;
         gap: rem(8px);
         width: 100%;
 
@@ -22,12 +23,27 @@
             font-family: Domine;
             text-align: center;
             padding-block-end: rem(6px);
+            margin-inline-start: auto;
         }
 
         button {
             img {
                 width: rem(20px);
                 height: auto;
+            }
+        }
+
+        .add-file {
+            margin-inline-start: auto;
+
+            button {
+                padding: rem(10px);
+                border: rem(1px) solid grey;
+                border-radius: rem(8px);
+
+                &:hover {
+                    background: rgba(212, 212, 212, 0.5);
+                }
             }
         }
     }
