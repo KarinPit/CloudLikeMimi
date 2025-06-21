@@ -15,6 +15,7 @@ import docxIcon from "../assets/imgs/FolderIndex/docx.svg"
 import txtIcon from "../assets/imgs/FolderIndex/txt.svg"
 import pdfIcon from "../assets/imgs/FolderIndex/pdf.svg"
 import xlsxIcon from "../assets/imgs/FolderIndex/xlsx.svg"
+import linkIcon from "../assets/imgs/FolderIndex/link.svg"
 import EmptyFolder from "../assets/imgs/FolderIndex/empty-wallet.svg"
 import { onToggleModal } from "../store/actions/app.actions"
 import { loadFolderById } from "../store/actions/folder.actions"
@@ -75,6 +76,8 @@ export default function FolderIndex() {
                 return <img className={cName} src={pdfIcon} alt="pdf file icon" />
             case 'xlsx':
                 return <img className={cName} src={xlsxIcon} alt="xlsx file icon" />
+            case 'url':
+                return <img className={cName} src={linkIcon} alt="link icon" />
             default:
                 return null
         }
@@ -118,36 +121,73 @@ export default function FolderIndex() {
                 :
                 // layout for normal and above screens
                 <div className="folder-info">
-                    {files.map((file, idx) => {
-                        return (<div key={idx} className="file-info">
-                            {getExtensionSVG(file.extension, "file-img")}
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>File Name</th>
-                                        <th>Date Modified</th>
-                                        <th>Size</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>{file.name}</td>
+                    <div className="file-info">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>File Name</th>
+                                    <th>Type</th>
+                                    <th>Date Modified</th>
+                                    <th>Size</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {files.map((file, idx) => {
+                                    return (<tr key={idx}>
+                                        <td>{getExtensionSVG(file.extension, "file-img")} {file.name}</td>
+                                        <td>{file.extension}</td>
                                         <td>{file.dateModified}</td>
                                         <td>{file.size}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div className="file-actions">
-                                <button onClick={() => downloadFile('abcd123')}>
-                                    <img src={downloadIcon}></img>
-                                </button>
-                                <button onClick={() => deleteFile(file.id)}>
-                                    <img src={trashIcon}></img>
-                                </button>
-                            </div>
-                        </div>)
-                    })}
+                                        <td>
+                                            <div className="file-actions">
+                                                <button onClick={() => downloadFile('abcd123')}>
+                                                    <img src={downloadIcon}></img>
+                                                </button>
+                                                <button onClick={() => deleteFile(file.id)}>
+                                                    <img src={trashIcon}></img>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>)
+                                })}
+                            </tbody>
+                        </table>
+
+                    </div>
+
                 </div>
+                // <div className="folder-info">
+                //     {files.map((file, idx) => {
+                //         return (<div key={idx} className="file-info">
+                //             {getExtensionSVG(file.extension, "file-img")}
+                //             <table>
+                //                 <thead>
+                //                     <tr>
+                //                         <th>File Name</th>
+                //                         <th>Date Modified</th>
+                //                         <th>Size</th>
+                //                     </tr>
+                //                 </thead>
+                //                 <tbody>
+                //                     <tr>
+                //                         <td>{file.name}</td>
+                //                         <td>{file.dateModified}</td>
+                //                         <td>{file.size}</td>
+                //                     </tr>
+                //                 </tbody>
+                //             </table>
+                //             <div className="file-actions">
+                //                 <button onClick={() => downloadFile('abcd123')}>
+                //                     <img src={downloadIcon}></img>
+                //                 </button>
+                //                 <button onClick={() => deleteFile(file.id)}>
+                //                     <img src={trashIcon}></img>
+                //                 </button>
+                //             </div>
+                //         </div>)
+                //     })}
+                // </div>
                 : <div className="empty-folder">
                     <img src={EmptyFolder}></img>
                     <p>No files to show...</p>

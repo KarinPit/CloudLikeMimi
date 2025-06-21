@@ -54,6 +54,7 @@ function _createFileData() {
 	if (!files || !files.length) {
 		const files = [
 			{ id: 'fl1', name: 'Resume', extension: 'pdf', dateModified: '2024-11-15', size: '120 KB', folderId: 'f1' },
+			{ id: 'fl1', name: 'Kahoot exam online', url: 'https://iconscout.com/icon/trash-2640968_2190054', extension: 'url', dateModified: '2024-12-15', size: null, folderId: 'f1' },
 			{ id: 'fl2', name: 'Invoice_Q4', extension: 'xlsx', dateModified: '2025-01-22', size: '245 KB', folderId: 'f2' },
 			{ id: 'fl3', name: 'Vacation_Photo_01', extension: 'jpg', dateModified: '2025-06-01', size: '2.3 MB', folderId: 'f3' },
 			{ id: 'fl4', name: 'Presentation_Final', extension: 'pptx', dateModified: '2025-03-19', size: '1.2 MB', folderId: 'f2' },

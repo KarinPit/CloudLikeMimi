@@ -150,22 +150,37 @@
                         white-space: nowrap;
 
                         &:nth-child(1) {
-                            width: 100%;
+                            // width: 100%;
+                            width: 65%;
                         }
 
                         &:nth-child(2) {
-                            width: rem(120px);
+                            width: 10%;
+                            // width: rem(120px);
                         }
 
                         &:nth-child(3) {
-                            width: rem(80px);
+                            width: 10%;
+                            // width: rem(80px);
+                        }
+
+                        &:nth-child(3) {
+                            width: 10%;
+                            // width: rem(80px);
+                        }
+
+                        &:nth-child(5) {
+                            width: 5%;
+                            // width: rem(200px);
                         }
                     }
                 }
             }
 
             .file-actions {
+                width: 100%;
                 display: flex;
+                justify-content: flex-start;
                 gap: rem(8px);
 
                 button {
