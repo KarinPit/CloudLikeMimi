@@ -52,13 +52,13 @@ export default function Home() {
         loadFoldersData()
     }, [])
 
-    if (isLoading) return <section className="home">
-        <div className='folder-header'>
-            <div className='main-title'>
-                <h1>My Folders</h1>
-                <p>All your files, organized.</p>
-            </div>
-            <div className='add-folder'>
+    if (isLoading) return <section className="home page-grid">
+        <div className='header-with-button'>
+            {/* <div className='main-title'> */}
+            <h1>My Folders</h1>
+            {/* <p>All your files, organized.</p> */}
+            {/* </div> */}
+            <div className='main-button add-folder'>
                 <button onClick={onAddFolder}>+ Add folder</button>
             </div>
         </div>
@@ -69,13 +69,13 @@ export default function Home() {
     </section>
 
     return (
-        <section className="home">
-            <div className='folder-header'>
-                <div className='main-title'>
-                    <h1>My Folders</h1>
-                    <p>All your files, organized.</p>
-                </div>
-                <div className='add-folder'>
+        <section className="home page-grid">
+            <div className='header-with-button'>
+                {/* <div className='main-title'> */}
+                <h1>My Folders</h1>
+                {/* <p>All your files, organized.</p> */}
+                {/* </div> */}
+                <div className='main-button add-folder'>
                     <button onClick={onAddFolder}>+ Add folder</button>
                 </div>
             </div>

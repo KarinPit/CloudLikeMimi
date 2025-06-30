@@ -89,15 +89,16 @@ export default function FolderIndex() {
         </section>
     )
     return (
-        <section className="folder-index">
-            <div className="folder-title">
-                <h1>{`${currentFolder.name}`}</h1>
-                <button onClick={onEditFolder}>
-                    <img src={editIcon}></img>
-                </button>
-                <div className='add-file'>
+        <section className="folder-index page-grid">
+            <div className="header-with-button">
+                <div className="edit-folder">
+                    <h1>{`${currentFolder.name}`}</h1>
+                    <button onClick={onEditFolder}>
+                        <img src={editIcon}></img>
+                    </button>
+                </div>
+                <div className='main-button add-file'>
                     <UploadWidget folderId={currentFolder.id} />
-                    {/* <button onClick={uploadFile}>+ Add file</button> */}
                 </div>
             </div>
             {files.length > 0 ? currentWidth <= smallScreen ?
@@ -157,37 +158,6 @@ export default function FolderIndex() {
                     </div>
 
                 </div>
-                // <div className="folder-info">
-                //     {files.map((file, idx) => {
-                //         return (<div key={idx} className="file-info">
-                //             {getExtensionSVG(file.extension, "file-img")}
-                //             <table>
-                //                 <thead>
-                //                     <tr>
-                //                         <th>File Name</th>
-                //                         <th>Date Modified</th>
-                //                         <th>Size</th>
-                //                     </tr>
-                //                 </thead>
-                //                 <tbody>
-                //                     <tr>
-                //                         <td>{file.name}</td>
-                //                         <td>{file.dateModified}</td>
-                //                         <td>{file.size}</td>
-                //                     </tr>
-                //                 </tbody>
-                //             </table>
-                //             <div className="file-actions">
-                //                 <button onClick={() => downloadFile('abcd123')}>
-                //                     <img src={downloadIcon}></img>
-                //                 </button>
-                //                 <button onClick={() => deleteFile(file.id)}>
-                //                     <img src={trashIcon}></img>
-                //                 </button>
-                //             </div>
-                //         </div>)
-                //     })}
-                // </div>
                 : <div className="empty-folder">
                     <img src={EmptyFolder}></img>
                     <p>No files to show...</p>
