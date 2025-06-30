@@ -8,13 +8,6 @@
         gap: 0 rem(6px);
         width: 100%;
 
-        &.loading {
-            display: flex;
-            height: 100%;
-            justify-content: center;
-            align-items: center;
-        }
-
         .folder {
             position: relative;
 
@@ -52,10 +45,6 @@
                 font-family: Outfit;
                 font-size: rem(16px);
             }
-        }
-
-        .lotti-container {
-            grid-column: 1/-1;
         }
     }
 }

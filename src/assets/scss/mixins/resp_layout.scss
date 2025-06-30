@@ -111,25 +111,36 @@ $xxl-breakpoint: 1880px;
         }
 
     }
+
+    .loading {
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+    }
 }
 
 @include for-narrow-layout {
     .page-grid {
         grid-template-columns: rem(20px) 1fr rem(20px);
         grid-template-rows: auto 1fr;
-        align-items: center;
+        align-items: start;
 
         .header-with-button {
+            position: relative;
             grid-column: 2;
             flex-direction: row;
             gap: 0;
 
             h1 {
-                margin-inline-start: auto;
+                margin-inline: auto;
             }
 
             .main-button {
-                margin-inline-start: auto;
+                position: absolute;
+                top: 50%;
+                transform: translate(0, -50%);
+                right: 0;
             }
         }
 

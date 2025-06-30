@@ -84,8 +84,12 @@ export default function FolderIndex() {
     }
     // loading animation until data is collected
     if (isLoading || !currentFolder) return (
-        <section className="folder-info">
-            <LoadingAnim />
+        <section className="folder-index page-grid">
+            <div className="header-with-button">
+            </div>
+            <div className="folder-info loading">
+                <LoadingAnim />
+            </div>
         </section>
     )
     return (
