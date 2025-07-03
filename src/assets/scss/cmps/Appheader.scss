@@ -51,6 +51,26 @@
         gap: rem(8px);
         height: 100%;
 
+        form {
+            input {
+                transition: all 0.2s ease-out;
+            }
+
+            &.hide {
+                input {
+                    opacity: 0;
+                    width: 0;
+                }
+            }
+
+            &.show {
+                input {
+                    opacity: 1;
+                    width: 200px;
+                }
+            }
+        }
+
         img:nth-child(2) {
             width: rem(24px);
             height: rem(24px);

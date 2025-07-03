@@ -59,9 +59,9 @@ export default function Home() {
             <h1>My Folders</h1>
             {/* <p>All your files, organized.</p> */}
             {/* </div> */}
-            <div className='main-button add-folder'>
+            {/* <div className='main-button add-folder'>
                 <button onClick={onAddFolder}>+ Add folder</button>
-            </div>
+            </div> */}
         </div>
 
         <div className='folder-gallery loading'>

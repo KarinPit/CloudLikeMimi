@@ -5,7 +5,7 @@
         grid-row: 2;
         justify-self: center;
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: rem(8px) rem(18px);
         width: fit-content;
         height: fit-content;
@@ -42,8 +42,6 @@
                 svg {
                     width: 100%;
                     height: auto;
-
-                    // path {}
                 }
 
                 p {
@@ -66,9 +64,7 @@
 
         .folder-gallery {
             grid-column: 2;
-            // grid-template-columns: repeat(3, 1fr);
-            grid-template-columns: repeat(3, auto);
-            // width: 100%;
+            grid-template-columns: repeat(4, auto);
 
             .folder {
                 p {
@@ -82,8 +78,7 @@
 @include for-normal-layout {
     .home {
         .folder-gallery {
-            grid-template-columns: repeat(4, 1fr);
-            // width: 100%;
+            grid-template-columns: repeat(5, 1fr);
         }
     }
 }
@@ -92,7 +87,6 @@
     .home {
         .folder-gallery {
             grid-template-columns: repeat(6, 1fr);
-            // width: 100%;
         }
     }
 }
