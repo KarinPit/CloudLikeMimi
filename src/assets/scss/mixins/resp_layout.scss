@@ -74,6 +74,7 @@ $xxl-breakpoint: 1880px;
     justify-content: center;
     height: 100%;
     margin: auto;
+    gap: rem(24px) rem(16px);
     max-width: rem(1400px);
 
     .header-with-button {

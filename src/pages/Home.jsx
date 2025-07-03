@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 
 import LoadingAnim from '../cmps/LoadingAnim.jsx';
+// import FolderIcon from '../assets/imgs/Home/folder.svg'
 
 import { showErrorMsg } from '../services/event-bus.service.js';
 import { saveFolder } from "../store/actions/folder.actions.js"
@@ -28,7 +29,7 @@ export default function Home() {
             return (
                 <NavLink key={shiftedIdx} to={`/folder/${folder.id}`}>
                     <div className={`folder ${colClass} mobile`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="files" style={{ color: folder.color }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 20 19.5" id="files" style={{ color: folder.color }}>
                             <path fill="currentColor" d="M19 21.5H5a3.003 3.003 0 0 1-3-3v-13a3.003 3.003 0 0 1 3-3h4.559a2.996 2.996 0 0 1 2.845 2.05l.317.95H19a3.003 3.003 0 0 1 3 3v10a3.003 3.003 0 0 1-3 3Z"></path>
                         </svg>
                         <p>{folder.name}</p>
