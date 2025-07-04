@@ -13,6 +13,7 @@ import { NavLink } from 'react-router-dom';
 
 
 export default function Home() {
+    const filterBy = useSelector((storeState) => storeState.folderModule.filterBy)
     const currentWidth = useSelector((storeState) => storeState.appModule.screenWidth)
     const smallScreen = useSelector((storeState) => storeState.appModule.smallScreen)
     const normalScreen = useSelector((storeState) => storeState.appModule.normalScreen)
@@ -51,7 +52,7 @@ export default function Home() {
 
     useEffect(() => {
         loadFoldersData()
-    }, [])
+    }, [filterBy])
 
     if (isLoading) return <section className="home page-grid">
         <div className='header-with-button'>

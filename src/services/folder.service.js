@@ -4,16 +4,50 @@ import { utilService } from './util.service'
 const STORAGE_KEY_FOLDER_DATA = 'folderData'
 
 export const folderService = {
+	query,
 	getFolderData,
 	getById,
 	save,
 	remove,
 	update,
-	getDefaultFolder
+	getDefaultFolder,
+	getDefaultFilter,
+	getFilterFromParams
 }
 
 window.folderService = folderService
 _createFolderData()
+
+async function query(filterBy) {
+	console.log('Loading folders');
+	let folders = await storageService.query(STORAGE_KEY_FOLDER_DATA)
+	if (filterBy) {
+		folders = folders.filter(folder =>
+			Object.entries(filterBy).every(([key, value]) => {
+				if (value === '') return true;
+				if (typeof value === 'string') {
+					return folder[key]?.toLowerCase().includes(value.toLowerCase());
+				}
+				return folder[key] === value;
+			})
+		);
+	}
+	return folders
+}
+
+// async function query(filterBy) {
+// 	console.log('Loading folders');
+// 	let folders = await storageService.query(STORAGE_KEY_FOLDER_DATA)
+// 	if (filterBy) {
+// 		let { name = '', createdAt = '' } = filterBy
+// 		folders = folders.filter(folder => Object.entries(filterBy).every(([key, value]) => {
+// 			if (value === '') return true; // skip filtering by this field
+// 			return folder[key] === value;
+// 		}
+// 		))
+// 	}
+// 	return folders
+// }
 
 function getFolderData() {
 	return storageService.query(STORAGE_KEY_FOLDER_DATA)
@@ -49,6 +83,26 @@ function getDefaultFolder(name = 'New folder', color = '#D6E7F8') {
 		color,
 	}
 }
+
+function getDefaultFilter() {
+	return ({
+		name: '',
+		createdAt: ''
+	})
+}
+
+function getFilterFromParams(searchParams) {
+	const defaultFilter = getDefaultFilter()
+	const filterBy = {
+		// type: searchParams.get('type'),
+		// model:
+	}
+	for (const field in defaultFilter) {
+		filterBy[field] = searchParams.get(field) || defaultFilter[field]
+	}
+	return filterBy
+}
+
 
 
 function _createFolderData() {

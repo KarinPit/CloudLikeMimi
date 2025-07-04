@@ -1,3 +1,5 @@
+import { folderService } from "../../services/folder.service"
+
 export const ADD_FAVORITE = 'ADD_FAVORITE'
 export const REMOVE_FAVORITE = 'REMOVE_FAVORITE'
 export const SET_FOLDERS = 'SET_FOLDERS'
@@ -5,12 +7,14 @@ export const SET_CURRENT_FOLDER = 'SET_CURRENT_FOLDER'
 export const ADD_FOLDER = 'ADD_FOLDER'
 export const UPDATE_FOLDER = 'UPDATE_FOLDER'
 export const REMOVE_FOLDER = 'REMOVE_FOLDER'
+export const SET_FILTER_BY = 'SET_FILTER_BY'
 export const SET_IS_LOADING = 'SET_IS_LOADING'
 
 const initialState = {
     favorites: [],
     folderData: [],
     currentFolder: null,
+    filterBy: folderService.getDefaultFilter(),
     isLoading: true
 }
 
@@ -49,6 +53,11 @@ export function folderReducer(state = initialState, cmd = {}) {
             return {
                 ...state,
                 isLoading: cmd.isLoading
+            }
+        case SET_FILTER_BY:
+            return {
+                ...state,
+                filterBy: { ...state.filterBy, ...cmd.fieldsToUpdate }
             }
         default:
             return state
