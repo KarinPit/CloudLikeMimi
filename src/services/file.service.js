@@ -10,10 +10,49 @@ export const fileService = {
 	save,
 	remove,
 	update,
+	getDefaultFilter,
+	getFilterFromParams
 }
 
 window.filesService = fileService
 _createFileData()
+
+
+function getDefaultFilter() {
+	return ({
+		name: '',
+		createdAt: ''
+	})
+}
+
+function getFilterFromParams(searchParams) {
+	const defaultFilter = getDefaultFilter()
+	const filterBy = {
+		// type: searchParams.get('type'),
+		// model:
+	}
+	for (const field in defaultFilter) {
+		filterBy[field] = searchParams.get(field) || defaultFilter[field]
+	}
+	return filterBy
+}
+
+async function getByFolderId(folderId, filterBy) {
+	const files = await storageService.query(STORAGE_KEY_FILES)
+	let folderFiles = files.filter(file => file.folderId === folderId)
+	if (filterBy) {
+		folderFiles = folderFiles.filter(file =>
+			Object.entries(filterBy).every(([key, value]) => {
+				if (value === '') return true;
+				if (typeof value === 'string') {
+					return file[key]?.toLowerCase().includes(value.toLowerCase());
+				}
+				return file[key] === value;
+			})
+		);
+	}
+	return folderFiles
+}
 
 function getFiles() {
 	return storageService.query(STORAGE_KEY_FILES)
@@ -22,12 +61,6 @@ function getFiles() {
 async function getById(filesId) {
 	const files = await storageService.get(STORAGE_KEY_FILES, filesId)
 	return files
-}
-
-async function getByFolderId(folderId) {
-	const files = await storageService.query(STORAGE_KEY_FILES)
-	const folderFiles = files.filter(file => file.folderId === folderId)
-	return folderFiles
 }
 
 async function remove(filesId) {
@@ -68,3 +101,19 @@ function _createFileData() {
 		utilService.saveToStorage(STORAGE_KEY_FILES, files)
 	}
 }
+
+// async function query(filterBy) {
+// 	let files = await storageService.query(STORAGE_KEY_FILES)
+// 	if (filterBy) {
+// 		files = files.filter(file =>
+// 			Object.entries(filterBy).every(([key, value]) => {
+// 				if (value === '') return true;
+// 				if (typeof value === 'string') {
+// 					return folder[key]?.toLowerCase().includes(value.toLowerCase());
+// 				}
+// 				return file[key] === value;
+// 			})
+// 		);
+// 	}
+// 	return files
+// }

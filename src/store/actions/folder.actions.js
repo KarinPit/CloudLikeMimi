@@ -10,7 +10,6 @@ export async function loadFoldersData() {
     try {
         const { filterBy } = store.getState().folderModule
         const folders = await folderService.query(filterBy)
-        console.log('this is inside the actions', folders);
         store.dispatch({ type: SET_FOLDERS, folderData: folders })
     } catch (err) {
         console.log('Had issues loading folders', err)

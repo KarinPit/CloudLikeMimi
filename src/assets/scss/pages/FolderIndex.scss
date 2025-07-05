@@ -61,6 +61,8 @@
     }
 
     .empty-folder {
+        grid-column: 1;
+        grid-row: 2;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -159,6 +161,10 @@
                     }
                 }
             }
+        }
+
+        .empty-folder {
+            grid-column: 2;
         }
     }
 }

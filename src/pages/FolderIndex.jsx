@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router"
 import { useSelector } from "react-redux"
 
 import UploadWidget from '../cmps/UploadWidget'
-import { folderService } from "../services/folder.service"
+// import { folderService } from "../services/folder.service"
 import { deleteFile, getFilesByFolderId, uploadFileToCloud } from "../store/actions/file.actions"
 
 import LoadingAnim from "../cmps/LoadingAnim"
@@ -24,14 +24,19 @@ export default function FolderIndex() {
     const currentWidth = useSelector((storeState) => storeState.appModule.screenWidth)
     const smallScreen = useSelector((storeState) => storeState.appModule.smallScreen)
     const files = useSelector((storeState) => storeState.fileModule.files)
+    const filterBy = useSelector((storeState) => storeState.fileModule.filterBy)
     const currentFolder = useSelector((storeState) => storeState.folderModule.currentFolder)
     const isLoading = useSelector((storeState) => storeState.folderModule.isLoading)
     const params = useParams()
 
     useEffect(() => {
         loadFolderById(params.folderId)
-        loadFiles(params.folderId)
+        getFilesByFolderId(params.folderId)
     }, [params.folderId])
+    
+    useEffect(() => {
+        getFilesByFolderId(params.folderId)
+    }, [filterBy])
 
     async function onEditFolder() {
         try {

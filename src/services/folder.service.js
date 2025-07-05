@@ -19,7 +19,6 @@ window.folderService = folderService
 _createFolderData()
 
 async function query(filterBy) {
-	console.log('Loading folders');
 	let folders = await storageService.query(STORAGE_KEY_FOLDER_DATA)
 	if (filterBy) {
 		folders = folders.filter(folder =>
@@ -34,20 +33,6 @@ async function query(filterBy) {
 	}
 	return folders
 }
-
-// async function query(filterBy) {
-// 	console.log('Loading folders');
-// 	let folders = await storageService.query(STORAGE_KEY_FOLDER_DATA)
-// 	if (filterBy) {
-// 		let { name = '', createdAt = '' } = filterBy
-// 		folders = folders.filter(folder => Object.entries(filterBy).every(([key, value]) => {
-// 			if (value === '') return true; // skip filtering by this field
-// 			return folder[key] === value;
-// 		}
-// 		))
-// 	}
-// 	return folders
-// }
 
 function getFolderData() {
 	return storageService.query(STORAGE_KEY_FOLDER_DATA)
@@ -102,8 +87,6 @@ function getFilterFromParams(searchParams) {
 	}
 	return filterBy
 }
-
-
 
 function _createFolderData() {
 	let folderData = utilService.loadFromStorage(STORAGE_KEY_FOLDER_DATA)

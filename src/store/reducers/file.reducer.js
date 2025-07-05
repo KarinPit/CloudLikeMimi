@@ -1,11 +1,15 @@
+import { fileService } from "../../services/file.service"
+
 export const SET_FILES = 'SET_FILES'
 export const ADD_FILE = 'ADD_FILE'
 export const REMOVE_FILE = 'REMOVE_FILE'
 export const UPDATE_FILE = 'UPDATE_FILE'
 export const SET_IS_LOADING = 'SET_IS_LOADING'
+export const SET_FILTER_BY_FILE = 'SET_FILTER_BY_FILE'
 
 const initialState = {
     files: [],
+    filterBy: fileService.getDefaultFilter(),
     isLoading: true
 }
 
@@ -33,6 +37,11 @@ export function fileReducer(state = initialState, cmd = {}) {
             return {
                 ...state,
                 isLoading: cmd.isLoading
+            }
+        case SET_FILTER_BY_FILE:
+            return {
+                ...state,
+                filterBy: { ...state.filterBy, ...cmd.fieldsToUpdate }
             }
         default:
             return state
