@@ -2,8 +2,6 @@ import { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 
 import LoadingAnim from '../cmps/LoadingAnim.jsx';
-// import FolderIcon from '../assets/imgs/Home/folder.svg'
-
 import { showErrorMsg } from '../services/event-bus.service.js';
 import { saveFolder } from "../store/actions/folder.actions.js"
 
@@ -41,7 +39,6 @@ export default function Home() {
 
     async function onAddFolder() {
         try {
-            // await saveFolder({})
             onToggleModal('addFolder', true)
             showSuccessMsg('Robot added successfully')
         } catch (err) {
@@ -56,13 +53,7 @@ export default function Home() {
 
     if (isLoading) return <section className="home page-grid">
         <div className='header-with-button'>
-            {/* <div className='main-title'> */}
             <h1>My Folders</h1>
-            {/* <p>All your files, organized.</p> */}
-            {/* </div> */}
-            {/* <div className='main-button add-folder'>
-                <button onClick={onAddFolder}>+ Add folder</button>
-            </div> */}
         </div>
 
         <div className='folder-gallery loading'>
@@ -73,10 +64,7 @@ export default function Home() {
     return (
         <section className="home page-grid">
             <div className='header-with-button'>
-                {/* <div className='main-title'> */}
                 <h1>My Folders</h1>
-                {/* <p>All your files, organized.</p> */}
-                {/* </div> */}
                 <div className='main-button add-folder'>
                     <button onClick={onAddFolder}>+ Add folder</button>
                 </div>

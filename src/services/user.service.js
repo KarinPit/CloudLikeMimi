@@ -6,7 +6,6 @@ const STORAGE_KEY_USER_DB = 'user'
 export const userService = {
 	login,
 	logout,
-	signup,
 	getLoggedinUser,
 	saveLocalUser,
 	getUsers,
@@ -49,16 +48,6 @@ function getEmptyUser() {
 }
 
 // Auth functions
-
-async function signup(userCred) {
-	// Adding "Server data"
-	userCred.balance = 10000
-	if (!userCred.imgUrl) userCred.imgUrl = 'https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png'
-	// Creating a new user
-	const user = await storageService.post('user', userCred)
-	// Performing login -> Saving in the session storage
-	return saveLocalUser(user)
-}
 
 async function login(userCred) {
 	const users = await storageService.query(STORAGE_KEY_USER_DB)

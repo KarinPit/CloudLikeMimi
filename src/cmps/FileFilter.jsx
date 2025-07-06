@@ -58,8 +58,8 @@ export default function FileFilter() {
 
     return (
         <>
-            <form className={`folder-filter ${isClicked ? 'show' : 'hide'}`} onSubmit={onSubmitFilter}>
-                <input ref={inputRef} id="name" name="name" type='text' placeholder='search folder...' value={filterBy.name || ''} onChange={handleChange}></input>
+            <form className={`file-filter ${isClicked ? 'show' : 'hide'}`} onSubmit={onSubmitFilter}>
+                <input ref={inputRef} id="name" name="name" type='text' placeholder='search file...' value={filterBy.name || ''} onChange={handleChange}></input>
             </form>
 
             <button className={`search-button ${!isClicked ? 'show' : ''}`} onClick={() => setIsClicked(true)}>
