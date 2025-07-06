@@ -1,7 +1,9 @@
 .login-page {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: rem(14px);
     min-width: fit-content;
     width: 100%;
     height: 100%;

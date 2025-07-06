@@ -1,26 +1,17 @@
 import { userService } from "../../services/user.service.js";
 
-import { REMOVE_USER, SET_USER, SET_USERS } from "../reducers/user.reducer.js"
+import { SET_USER } from "../reducers/user.reducer.js"
 
 import { store } from "../store.js"
 
 
 
-export async function loadUsers() {
+export async function loadUser() {
     try {
-        const users = await userService.getUsers()
-        store.dispatch({ type: SET_USERS, users })
+        const user = await userService.getUser()
+        store.dispatch({ type: SET_USER, user: user })
     } catch (err) {
         console.log('UserActions: err in loadUsers', err)
-    }
-}
-
-export async function removeUser(userId) {
-    try {
-        await userService.remove(userId)
-        store.dispatch({ type: REMOVE_USER, userId })
-    } catch (err) {
-        console.log('UserActions: err in removeUser', err)
     }
 }
 
@@ -34,20 +25,6 @@ export async function login(credentials) {
         return user
     } catch (err) {
         console.log('Cannot login', err)
-        throw err
-    }
-}
-
-export async function signup(credentials) {
-    try {
-        const user = await userService.signup(credentials)
-        store.dispatch({
-            type: SET_USER,
-            user
-        })
-        return user
-    } catch (err) {
-        console.log('Cannot signup', err)
         throw err
     }
 }

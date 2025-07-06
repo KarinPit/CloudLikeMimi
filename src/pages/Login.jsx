@@ -1,45 +1,46 @@
 import { useState, useEffect } from 'react'
 import { userService } from '../services/user.service'
-import { loadUsers } from '../store/actions/user.actions'
+import { loadUser, login } from '../store/actions/user.actions'
 import { useSelector } from 'react-redux';
 
-export default function Login(props) {
-    const users = useSelector(storeState => storeState.userModule.users)
+
+export default function Login() {
+    const user = useSelector(storeState => storeState.userModule.user)
     const [credentials, setCredentials] = useState(userService.getEmptyUser())
-    const [isSignup, setIsSignup] = useState(false)
 
     useEffect(() => {
-        loadUsers()
+        loadUser()
     }, [])
-
 
     function clearState() {
         setCredentials(userService.getEmptyUser())
-        setIsSignup(false)
-    }
-
-    function handleChange(ev) {
-        const field = ev.target.name
-        const value = ev.target.value
-        setCredentials(prevCredentials => ({ ...prevCredentials, [field]: value }))
     }
 
     async function onLogin(ev) {
         if (ev) ev.preventDefault()
-        if (!credentials.username) return
-        await props.onLogin(credentials)
-        clearState()
-    }
+        const form = ev.target
+        const username = form.username.value.trim()
+        const password = form.password.value
+        if (!username || !password) {
+            console.log('Missing username or password')
+            return
+        }
 
-    function toggleSignup() {
-        setIsSignup(prevIsSignup => !prevIsSignup)
+        try {
+            const user = await login({ username, password })
+            console.log('Logged in user:', user)
+            clearState()
+        } catch (err) {
+            console.error('Login failed:', err.message)
+        }
     }
 
     return (
         <div className="login-page">
+            <h1>Login</h1>
             <form className="login-form" onSubmit={onLogin}>
-                <input id="username" name="username" type='text' placeholder='Username'></input>
-                <input id="passwd" name="passwd" type="password" placeholder='Enter password'></input>
+                <input id="username" name="username" type='text' placeholder='Username' required></input>
+                <input id="password" name="password" type="password" placeholder='Enter password' required></input>
                 <button>Login</button>
             </form>
         </div>
