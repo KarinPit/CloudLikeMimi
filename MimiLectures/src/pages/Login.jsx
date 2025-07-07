@@ -10,11 +10,6 @@ export default function Login() {
     const [credentials, setCredentials] = useState(userService.getEmptyUser())
     const navigate = useNavigate()
 
-
-    // useEffect(() => {
-    //     getLoggedUser()
-    // }, [])
-
     function clearState() {
         setCredentials(userService.getEmptyUser())
     }

@@ -45,6 +45,7 @@
     }
 
     .user-options {
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -80,9 +81,27 @@
             }
         }
 
-        img:nth-child(2) {
-            width: rem(24px);
-            height: rem(24px);
+        img {
+            cursor: pointer;
+
+            &:nth-child(2) {
+                width: rem(24px);
+                height: rem(24px);
+            }
+        }
+
+
+        .user-menu {
+            position: absolute;
+            top: rem(40px);
+            right: rem(10px);
+            background-color: #fff;
+            border: rem(1px) solid grey;
+            border-radius: rem(8px);
+            width: rem(150px);
+            height: fit-content;
+            padding: rem(20px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
     }
 

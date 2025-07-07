@@ -15,7 +15,6 @@ import AddFolderModal from './cmps/AddFolderModal';
 import EditFolderModal from './cmps/EditFolderModal';
 import ConfirmModal from "./cmps/ConfirmModal"
 import ModalOverlay from './cmps/ModalOverlay';
-import { getLoggedUser } from './store/actions/user.actions';
 
 export function App() {
     const location = useLocation()
@@ -49,7 +48,6 @@ export function App() {
     }, [])
 
     useEffect(() => {
-        console.log(loggedInUser);
     }, [loggedInUser])
 
     return (
