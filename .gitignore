@@ -1,5 +1,11 @@
-node_modules/
-logs/
+# Ignore node_modules in both projects
+MimiLectures/node_modules/
+MimiLectures-backend/node_modules/
+
+# Ignore backend logs
+MimiLectures-backend/logs/
+
+# Ignore OS and editor-specific files
+.DS_Store
 .env
 dist/
-.DS_Store
