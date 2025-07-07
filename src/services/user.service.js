@@ -52,7 +52,7 @@ function getEmptyUser() {
 
 async function login(userCred) {
 	const users = await storageService.query(STORAGE_KEY_USER_DB)
-	const user = users.find(user => user.username === userCred.username)	
+	const user = users.find(user => user.username === userCred.username)
 
 	if (!user) {
 		throw new Error('User not found')
@@ -79,7 +79,7 @@ async function logout() {
 
 function saveLocalUser(user) {
 	user = { id: user.id, fullname: user.fullname, imgUrl: user.imgUrl }
-	// sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
+	sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
 	return user
 }
 

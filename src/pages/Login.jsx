@@ -1,16 +1,19 @@
 import { useState, useEffect } from 'react'
 import { userService } from '../services/user.service'
-import { loadUser, login } from '../store/actions/user.actions'
+import { getLoggedUser, login } from '../store/actions/user.actions'
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 
 export default function Login() {
     const user = useSelector(storeState => storeState.userModule.user)
     const [credentials, setCredentials] = useState(userService.getEmptyUser())
+    const navigate = useNavigate()
 
-    useEffect(() => {
-        loadUser()
-    }, [])
+
+    // useEffect(() => {
+    //     getLoggedUser()
+    // }, [])
 
     function clearState() {
         setCredentials(userService.getEmptyUser())
@@ -28,8 +31,8 @@ export default function Login() {
 
         try {
             const user = await login({ username, password })
-            console.log('Logged in user:', user)
             clearState()
+            navigate("/")
         } catch (err) {
             console.error('Login failed:', err.message)
         }

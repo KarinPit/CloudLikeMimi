@@ -6,9 +6,18 @@ import { store } from "../store.js"
 
 
 
-export async function loadUser() {
+// export async function loadUser() {
+//     try {
+//         const user = await userService.getUser()
+//         store.dispatch({ type: SET_USER, user: user })
+//     } catch (err) {
+//         console.log('UserActions: err in loadUsers', err)
+//     }
+// }
+
+export async function getLoggedUser() {
     try {
-        const user = await userService.getUser()
+        const user = await userService.getLoggedinUser()
         store.dispatch({ type: SET_USER, user: user })
     } catch (err) {
         console.log('UserActions: err in loadUsers', err)
