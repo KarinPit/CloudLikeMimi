@@ -51,7 +51,7 @@ export function App() {
     }, [loggedInUser])
 
     return (
-        <section className={`main-app ${openModalType ? 'open-modal' : ''}`}>
+        <section className={`main-app ${openModalType ? 'open-modal' : ''}${!loggedInUser ? 'login-background' : ''}`}>
             {!loggedInUser ? (
                 <main className='main-container'>
                     <Routes>
