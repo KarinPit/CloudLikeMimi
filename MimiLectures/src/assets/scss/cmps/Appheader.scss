@@ -7,12 +7,12 @@
     align-items: center;
     width: 100%;
     height: 100%;
-    background-color: #fff;
+    // background-color: #fff;
 
 
     img {
-        width: rem(16px);
-        height: rem(16px);
+        width: rem(100px);
+        height: rem(18px);
     }
 
     button {
@@ -108,8 +108,8 @@
     @include for-normal-layout {
 
         img {
-            width: rem(20px);
-            height: rem(20px);
+            width: rem(22px);
+            height: auto;
         }
 
         .user-options {

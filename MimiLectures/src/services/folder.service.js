@@ -62,7 +62,7 @@ async function save(folderToSave) {
 	}
 }
 
-function getDefaultFolder(name = 'New folder', color = '#D6E7F8') {
+function getDefaultFolder(name = 'New folder', color = '#A7C0F2') {
 	return {
 		name,
 		color,
@@ -92,13 +92,13 @@ function _createFolderData() {
 	let folderData = utilService.loadFromStorage(STORAGE_KEY_FOLDER_DATA)
 	if (!folderData || !folderData.length) {
 		folderData = [
-			{ id: 'f1', name: 'Documents', color: '#D6E7F8' },
-			{ id: 'f2', name: 'Projects', color: '#D6E7F8' },
-			{ id: 'f3', name: 'Photos', color: '#D6E7F8' },
-			{ id: 'f4', name: 'Downloads', color: '#D6E7F8' },
-			{ id: 'f5', name: 'Music', color: '#D6E7F8' },
-			{ id: 'f6', name: 'Videos', color: '#D6E7F8' },
-			{ id: 'f7', name: 'Archive', color: '#D6E7F8' },
+			{ id: 'f1', name: 'Documents', color: '#A7C0F2' },
+			{ id: 'f2', name: 'Projects', color: '#A7C0F2' },
+			{ id: 'f3', name: 'Photos', color: '#A7C0F2' },
+			{ id: 'f4', name: 'Downloads', color: '#A7C0F2' },
+			{ id: 'f5', name: 'Music', color: '#A7C0F2' },
+			{ id: 'f6', name: 'Videos', color: '#A7C0F2' },
+			{ id: 'f7', name: 'Archive', color: '#A7C0F2' },
 		]
 		utilService.saveToStorage(STORAGE_KEY_FOLDER_DATA, folderData)
 	}

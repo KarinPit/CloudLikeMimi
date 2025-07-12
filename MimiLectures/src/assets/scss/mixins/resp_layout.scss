@@ -73,8 +73,9 @@ $xxl-breakpoint: 1880px;
     grid-template-rows: auto 1fr;
     justify-content: center;
     height: 100%;
+    width: fit-content;
     margin: auto;
-    gap: rem(24px) rem(16px);
+    gap: rem(40px) rem(16px);
     max-width: rem(1400px);
 
     .header-with-button {
@@ -88,25 +89,28 @@ $xxl-breakpoint: 1880px;
 
         h1 {
             font-size: rem(38px);
-            font-weight: 500;
-            font-family: Domine;
+            font-weight: 600;
+            letter-spacing: rem(-0.5px);
             padding-block-end: rem(6px);
             text-align: center;
         }
 
         p {
-            font-family: Jakarta;
             color: #1B2128;
         }
 
         .main-button {
             button {
-                padding: rem(10px);
-                border: rem(1px) solid grey;
+                border: rem(1px) solid gray;
+                color: #333;
                 border-radius: rem(8px);
+                padding: rem(8px) rem(16px);
+                font-weight: 500;
+                transition: background-color 0.2s ease;
 
                 &:hover {
-                    background: rgba(212, 212, 212, 0.5);
+                    // background: rgba(212, 212, 212, 0.5);
+                    background-color: #dfdfdf;
                 }
             }
         }
