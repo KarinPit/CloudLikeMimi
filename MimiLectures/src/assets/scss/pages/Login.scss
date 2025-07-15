@@ -37,6 +37,22 @@
             color: #4B5563;
         }
 
+        .error-container {
+            padding: rem(12px);
+            margin-bottom: rem(16px);
+            border-radius: rem(6px);
+            border: 1px solid #FECACA;
+            background-color: #FEF2F2;
+            width: 100%;
+
+            p {
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+                color: #DC2626;
+
+            }
+        }
+
         form {
             display: flex;
             flex-direction: column;

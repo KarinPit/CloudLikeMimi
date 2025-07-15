@@ -56,6 +56,11 @@ export default function Login() {
             <div className='login-container'>
                 <h1>Login</h1>
                 <h2>Welcome! Please enter your details.</h2>
+                {loginError && (
+                    <div className='error-container'>
+                        <p className='error-msg'>{loginError?.toLowerCase()}</p>
+                    </div>
+                )}
                 <form className="login-form" onSubmit={onLogin}>
                     <input className="username" onChange={() => setLoginError('')} id="username" name="username" type='text' placeholder='Username' required></input>
                     <div className='password-container'>
@@ -64,7 +69,6 @@ export default function Login() {
                     </div>
                     <button>Login</button>
                 </form>
-                <p className='error-msg'>{loginError?.toLowerCase()}</p>
                 <p className="forgot-password" onClick={onForgotPasswordClick}>Forgot password?</p>
                 {modals.forgotPassword && <ForgotPasswordModal />}
             </div>
