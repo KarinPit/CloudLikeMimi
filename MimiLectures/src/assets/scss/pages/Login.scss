@@ -8,29 +8,33 @@
     height: 100%;
 
     .login-container {
+        position: relative;
         display: flex;
         flex-direction: column;
         justify-content: start;
         align-items: center;
-        gap: rem(14px);
         width: 100%;
-        height: 100%;
-        max-height: rem(320px);
-        max-width: rem(450px);
-        padding: rem(40px) rem(26px);
-        border-radius: rem(12px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        max-width: rem(460px);
+        padding: rem(32px);
+        border-radius: rem(8px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         background-color: #ffffff;
 
         h1 {
+            font-weight: 700;
+            font-style: normal;
             font-size: rem(24px);
-            font-weight: 900;
+            line-height: rem(32px);
+            text-align: center;
+            margin-block-end: rem(8px);
         }
 
         h2 {
             font-size: rem(16px);
             font-weight: 400;
-            color: rgb(107, 107, 107);
+            text-align: center;
+            margin-block-end: rem(24px);
+            color: #4B5563;
         }
 
         form {
@@ -45,28 +49,21 @@
             }
 
             input {
+                padding: rem(8px) rem(16px);
+                border-radius: rem(6px);
+                border: 1px solid #D1D5DB;
                 width: 100%;
-                min-width: fit-content;
-                max-width: rem(400px);
-                height: rem(35px);
-                border-radius: rem(8px);
-                border: rem(1px) solid rgb(190, 190, 190);
-                padding: rem(6px);
-                font-size: rem(14px);
-                transition: border ease-in-out 200ms;
+                height: rem(46px);
+                font-size: rem(16px);
 
                 &::placeholder {
-                    color: gray;
-                    font-weight: 700;
+                    color: #9DA3B0;
+                    font-weight: 600;
                 }
 
                 &:focus {
                     outline: none;
-                    box-shadow: 0 0 0 2px #60a5fa;
-                }
-
-                &:hover {
-                    border: rem(1px) solid gray;
+                    box-shadow: 0 0 0 2px #3B82F6;
                 }
             }
 
@@ -74,14 +71,19 @@
                 position: relative;
                 width: 100%;
 
-                img {
+                svg {
                     position: absolute;
-                    top: 0;
+                    top: 50%;
                     right: 0;
-                    width: rem(24px);
+                    width: rem(20px);
                     height: auto;
-                    transform: translate(-50%, 25%);
+                    transform: translate(-50%, -50%);
+                    color: #6B7280;
                     cursor: pointer;
+
+                    &:hover {
+                        color: #374151;
+                    }
                 }
 
                 p {
@@ -90,30 +92,40 @@
             }
 
             button {
-                cursor: pointer;
-                margin: auto;
-                min-width: fit-content;
-                max-width: rem(200px);
-                width: 50%;
-                height: rem(40px);
-                padding: rem(6px);
-                border: none;
-                border-radius: rem(16px);
-                font-size: rem(16px);
-                font-weight: 700;
+                padding: rem(8px) rem(16px);
+                border-radius: rem(6px);
+                width: 100%;
+                height: rem(46px);
                 color: #ffffff;
-                background-color: #1976d2;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                transition: background-color ease-in-out 200ms;
+                background-color: #2563EB;
+                transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+                transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                transition-duration: 300ms;
+                font-size: rem(16px);
+                font-weight: 600;
 
                 &:hover {
-                    background-color: #1565c0;
+                    background-color: #1D4ED8;
                 }
             }
         }
 
         p {
-            color: red;
+            &.error-msg {
+                color: red;
+            }
+
+            &.forgot-password {
+                cursor: pointer;
+                font-size: rem(14px);
+                line-height: rem(20px);
+                color: #2563EB;
+                margin-block-start: rem(16px);
+
+                &:hover {
+                    color: #1E40AF;
+                }
+            }
         }
     }
 }

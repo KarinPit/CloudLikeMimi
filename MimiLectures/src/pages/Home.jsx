@@ -74,7 +74,7 @@ export default function Home() {
                 {currentWidth <= smallScreen ? arrangeFolders(2)
                     : currentWidth > smallScreen && currentWidth <= normalScreen ? arrangeFolders(3)
                         : currentWidth > normalScreen && currentWidth <= wideScreen ? arrangeFolders(4)
-                            : arrangeFolders(5)}
+                            : arrangeFolders(7)}
             </div>
         </section>
     )

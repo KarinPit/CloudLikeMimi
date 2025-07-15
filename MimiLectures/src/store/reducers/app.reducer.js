@@ -3,7 +3,7 @@ export const SET_SCREEN_WIDTH = 'SET_SCREEN_WIDTH'
 
 
 const initialState = {
-	modals: { addFolder: null, editFolder: null, confirmModal: null },
+	modals: { addFolder: null, editFolder: null, confirmModal: null, forgotPassword: null },
 	screenWidth: window.innerWidth,
 	smallScreen: 550,
 	normalScreen: 950,
@@ -16,7 +16,6 @@ export function appReducer(state = initialState, cmd = {}) {
 			return {
 				...state,
 				modals: { ...state.modals, ...cmd.modalState }
-				// modals: { ...state.modals, [cmd.modalType]: cmd.isOpen }
 			}
 		case SET_SCREEN_WIDTH:
 			return {

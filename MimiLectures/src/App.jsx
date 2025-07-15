@@ -37,6 +37,8 @@ export function App() {
                 return <EditFolderModal />
             case 'confirmModal':
                 return <ConfirmModal {...modalValue} />
+            case 'forgotPassword':
+                return 'bg-only'
             default:
                 return null
         }
@@ -51,15 +53,20 @@ export function App() {
     }, [loggedInUser])
 
     return (
-        <section className={`main-app ${openModalType ? 'open-modal' : ''}${!loggedInUser ? 'login-background' : ''}`}>
+        <section className={`main-app ${openModalType ? 'open-modal' : ''} ${!loggedInUser ? 'login-background' : ''}`}>
             {!loggedInUser ? (
-                <main className='main-container'>
-                    <Routes>
-                        <Route path="*" element={<Login />} />
-                    </Routes>
-                </main>)
+                <>
+                    {openModalType && getModal() !== 'bg-only' && getModal()}
+                    {openModalType && <ModalOverlay modalType={openModalType} />}
+                    <main className='main-container'>
+                        <Routes>
+                            <Route path="*" element={<Login />} />
+                        </Routes>
+                    </main>
+                </>
+            )
                 : (<>
-                    {openModalType && getModal()}
+                    {openModalType && getModal() !== 'bg-only' && getModal()}
                     {openModalType && <ModalOverlay modalType={openModalType} />}
                     <AppHeader />
                     <main className='main-container'>

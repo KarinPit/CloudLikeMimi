@@ -1,15 +1,10 @@
 .main-app {
     position: relative;
-    font-family: Outfit;
+    font-family: Inter;
     @include grid_layout();
-    background-color: #F8FAFC;
-
-    // &.open-modal {
-        
-    // }
 
     &.login-background {
-        background-color: #f2f2f2;
+        background-color: #F9FAFB;
     }
 
     .app-header {
