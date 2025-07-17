@@ -1,37 +1,4 @@
 .main-app {
-    position: relative;
-    font-family: Inter;
-    @include grid_layout();
-
-    &.login-background {
-        background-color: #F9FAFB;
-    }
-
-    .app-header {
-        grid-column: 1;
-        grid-row: 1;
-        padding-inline: $padding-sm;
-    }
-
-    .main-container {
-        grid-column: 1;
-        grid-row: 2;
-        padding-inline: $padding-lg;
-        padding-block: $padding-lg;
-    }
-
-    .footer {
-        grid-column: 1;
-        grid-row: 3;
-        padding-inline: $padding-sm;
-    }
-
-    .lotti-container {
-        grid-column: 1/-1;
-        width: rem(100px);
-        margin: auto;
-    }
-
     @include for-mobile-layout {}
 
     @include for-narrow-layout {}

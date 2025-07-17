@@ -1,0 +1,171 @@
+   .main-app {
+       position: relative;
+       font-family: Inter;
+       @include grid_layout();
+
+       //    >* {
+       //        padding-inline: rem(16px);
+       //        margin-inline: auto;
+       //    }
+
+       &.login-background {
+           background-color: #F9FAFB;
+       }
+
+       .header-container {
+           width: 100%;
+           border-bottom: 1px solid #E5E7EB;
+
+           .app-header {
+               grid-column: 1;
+               grid-row: 1;
+               padding: rem(12px) rem(16px);
+               max-width: rem($mobile-breakpoint);
+               margin-inline: auto;
+           }
+       }
+
+       .main-container {
+           grid-column: 1;
+           grid-row: 2;
+           max-width: rem($mobile-breakpoint);
+           margin-inline: auto;
+           padding: rem(32px) rem(16px);
+       }
+
+       .footer-container {
+           .footer {
+               grid-column: 1;
+               grid-row: 3;
+               background-color: rgb(46, 46, 46);
+           }
+       }
+
+       .lotti-container {
+           grid-column: 1/-1;
+           width: rem(100px);
+           margin: auto;
+       }
+
+       .page-grid {
+           display: grid;
+           grid-template-columns: 1fr;
+           grid-template-rows: auto 1fr;
+           align-items: start;
+           justify-content: center;
+           gap: rem(32px);
+           height: 100%;
+           width: 100%;
+
+           .header-with-button {
+               position: relative;
+               grid-column: 1;
+               flex-direction: row;
+               justify-content: space-between;
+               grid-row: 1;
+               display: flex;
+               align-items: center;
+               width: 100%;
+               gap: 0;
+
+               h1 {
+                   font-size: 1.875rem;
+                   line-height: 2.25rem;
+                   font-weight: 700;
+                   color: #1F2937;
+               }
+
+               p {
+                   color: #1B2128;
+               }
+
+               .main-button {
+                   button {
+                       display: flex;
+                       padding-top: 0.5rem;
+                       padding-bottom: 0.5rem;
+                       padding-left: 1rem;
+                       padding-right: 1rem;
+                       align-items: center;
+                       border-radius: 0.375rem;
+                       border: 1px solid #D1D5DB;
+                       transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+                       transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+                       transition-duration: 300ms;
+                       font-size: rem(16px);
+
+                       &:hover {
+                           background-color: #dfdfdf;
+                       }
+                   }
+               }
+           }
+
+           .loading {
+               display: flex;
+               height: 100%;
+               justify-content: center;
+               align-items: center;
+           }
+       }
+   }
+
+   @include for-narrow-layout {
+       .main-app {
+           .header-container {
+               .app-header {
+                   max-width: rem($narrow-breakpoint);
+               }
+           }
+
+           .main-container {
+               max-width: rem($narrow-breakpoint);
+           }
+
+       }
+   }
+
+   @include for-normal-layout {
+       .main-app {
+           .header-container {
+               .app-header {
+                   max-width: rem($normal-breakpoint);
+               }
+           }
+
+           .main-container {
+               max-width: rem($normal-breakpoint);
+           }
+
+       }
+   }
+
+   @include for-wide-layout {
+       .main-app {
+           .header-container {
+               .app-header {
+                   max-width: rem($wide-breakpoint);
+               }
+           }
+
+           .main-container {
+               max-width: rem($wide-breakpoint);
+           }
+
+       }
+   }
+
+   @include for-extra-wide-layout {
+       .main-app {
+           .header-container {
+               .app-header {
+                   max-width: rem($xl-breakpoint);
+               }
+           }
+
+           .main-container {
+               max-width: rem($xl-breakpoint);
+           }
+
+       }
+   }

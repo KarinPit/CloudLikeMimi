@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 
 import LoadingAnim from '../cmps/LoadingAnim.jsx';
@@ -9,6 +9,10 @@ import { loadFoldersData } from "../store/actions/folder.actions.js"
 import { onToggleModal } from '../store/actions/app.actions.js';
 import { NavLink } from 'react-router-dom';
 
+import {
+    FolderIcon, Edit2Icon, Trash2Icon, XIcon
+} from 'lucide-react'
+
 
 export default function Home() {
     const filterBy = useSelector((storeState) => storeState.folderModule.filterBy)
@@ -18,7 +22,7 @@ export default function Home() {
     const wideScreen = useSelector((storeState) => storeState.appModule.wideScreen)
     const folderData = useSelector((storeState) => storeState.folderModule.folderData)
     const isLoading = useSelector((storeState) => storeState.folderModule.isLoading)
-
+    const [hoveredFolderId, setHoveredFolderId] = useState(null)
 
     function arrangeFolders(colNum) {
         return folderData.map((folder, idx) => {
@@ -26,12 +30,30 @@ export default function Home() {
             const colClass = `col-${(shiftedIdx % colNum) || colNum}`;
 
             return (
-                <NavLink key={shiftedIdx} to={`/folder/${folder.id}`}>
+                <NavLink key={shiftedIdx} to={`/folder/${folder.id}`} onMouseEnter={() => setHoveredFolderId(folder.id)} onMouseLeave={() => setHoveredFolderId(null)}>
                     <div className={`folder ${colClass} mobile`}>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="2 2 20 19.5" id="files" style={{ color: folder.color }}>
-                            <path fill="currentColor" d="M19 21.5H5a3.003 3.003 0 0 1-3-3v-13a3.003 3.003 0 0 1 3-3h4.559a2.996 2.996 0 0 1 2.845 2.05l.317.95H19a3.003 3.003 0 0 1 3 3v10a3.003 3.003 0 0 1-3 3Z"></path>
-                        </svg>
+                        <div className='svg-container'>
+                            <FolderIcon />
+                        </div>
                         <p>{folder.name}</p>
+                    </div>
+                    <div className={`folder-options ${hoveredFolderId === folder.id ? 'show' : ''}`}>
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault()
+                                // handleEdit(folder.id, folder.name)
+                            }}
+                        >
+                            <Edit2Icon />
+                        </button>
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault()
+                                // setShowDeleteConfirm(folder.id)
+                            }}
+                        >
+                            <Trash2Icon />
+                        </button>
                     </div>
                 </NavLink>)
         })

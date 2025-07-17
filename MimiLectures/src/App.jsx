@@ -1,5 +1,5 @@
 import { Navigate, Route, HashRouter as Router, Routes, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Provider } from 'react-redux'
 import { Suspense, lazy } from 'react';
 
@@ -15,6 +15,7 @@ import AddFolderModal from './cmps/AddFolderModal';
 import EditFolderModal from './cmps/EditFolderModal';
 import ConfirmModal from "./cmps/ConfirmModal"
 import ModalOverlay from './cmps/ModalOverlay';
+import MenuModal from './cmps/MenuModal';
 
 export function App() {
     const location = useLocation()
@@ -23,6 +24,7 @@ export function App() {
     const [openModalType, modalValue] = Object.entries(modals).find(
         ([_, val]) => val && (val.isOpen || val === true)
     ) || []
+    const menuRef = useRef(null)
 
     function onChangeWidth() {
         const currentWidth = window.innerWidth
@@ -38,6 +40,8 @@ export function App() {
             case 'confirmModal':
                 return <ConfirmModal {...modalValue} />
             case 'forgotPassword':
+                return 'bg-only'
+            case 'mainMenu':
                 return 'bg-only'
             default:
                 return null
@@ -68,7 +72,12 @@ export function App() {
                 : (<>
                     {openModalType && getModal() !== 'bg-only' && getModal()}
                     {openModalType && <ModalOverlay modalType={openModalType} />}
-                    <AppHeader />
+                    {openModalType && openModalType === 'mainMenu' && <div ref={menuRef} className='menu-modal'>
+                        <MenuModal />
+                    </div>}
+                    <div className='header-container'>
+                        <AppHeader />
+                    </div>
                     <main className='main-container'>
                         <Routes>
                             <Route path="/" element={<Home />} />
@@ -76,7 +85,9 @@ export function App() {
                             <Route path="*" element={<Home />} />
                         </Routes>
                     </main>
-                    <Footer />
+                    <div className='footer-container'>
+                        <Footer />
+                    </div>
                 </>)}
         </section>
     )

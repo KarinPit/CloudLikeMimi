@@ -78,7 +78,7 @@ async function logout() {
 }
 
 function saveLocalUser(user) {
-	user = { id: user.id, fullname: user.fullname, imgUrl: user.imgUrl }
+	user = { id: user.id, fullname: user.fullname, mail: user.mail, imgUrl: user.imgUrl }
 	sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
 	return user
 }
@@ -96,6 +96,7 @@ async function _createUser() {
 		await signup({
 			fullname: 'Nina Pitlik',
 			username: usernameToCheck,
+			mail: 'ninapitlik@gmail.com',
 			password: '123456!'
 		})
 	}

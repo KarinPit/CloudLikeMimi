@@ -7,7 +7,9 @@ import searchIcon from "../assets/imgs/Appheader/search.svg"
 import { setFilterBy } from '../store/actions/folder.actions'
 import { useSearchParams } from 'react-router-dom'
 import { folderService } from '../services/folder.service'
-
+import {
+    Search
+} from 'lucide-react'
 
 export default function FolderFilter() {
     const filterBy = useSelector((storeState) => storeState.folderModule.filterBy)
@@ -63,7 +65,7 @@ export default function FolderFilter() {
             </form>
 
             <button className={`search-button ${!isClicked ? 'show' : ''}`} onClick={() => setIsClicked(true)}>
-                <img src={searchIcon}></img>
+                <Search />
             </button>
         </>
     )

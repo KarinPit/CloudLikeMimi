@@ -4,52 +4,68 @@ import { NavLink, useLocation } from 'react-router-dom'
 import FolderFilter from './FolderFilter'
 import FileFilter from './FileFilter'
 
-import userIcon from "../assets/imgs/Appheader/user.svg"
-import menuIcon from "../assets/imgs/Appheader/menu.svg"
+import {
+    Menu,
+    Search,
+    User,
+    XIcon,
+    HomeIcon,
+    FolderIcon,
+    SettingsIcon,
+    HelpCircleIcon,
+    LogOutIcon,
+} from 'lucide-react'
 import { logout } from '../store/actions/user.actions'
+import MenuModal from './MenuModal'
+import { useSelector } from 'react-redux'
+import { onToggleModal } from '../store/actions/app.actions'
 
 
 export default function AppHeader() {
     const location = useLocation()
     const userRef = useRef(null)
-    const [isClicked, setIsClicked] = useState(false)
+    const menuRef = useRef(null)
+    const [isClickedUser, setIsClickedUser] = useState(false)
 
     useEffect(() => {
     }, [location])
 
     useEffect(() => {
-        if (isClicked) {
-            document.addEventListener('mousedown', handleOutsideClick)
+        if (isClickedUser) {
+            document.addEventListener('mousedown', handleOutsideClickUser)
         } else {
-            document.removeEventListener('mousedown', handleOutsideClick)
+            document.removeEventListener('mousedown', handleOutsideClickUser)
         }
         return () => {
-            document.removeEventListener('mousedown', handleOutsideClick)
+            document.removeEventListener('mousedown', handleOutsideClickUser)
         }
-    }, [isClicked])
+    }, [isClickedUser])
 
-    function handleOutsideClick(ev) {
+    function handleOutsideClickUser(ev) {
         if (
             userRef.current &&
             !userRef.current.contains(ev.target) &&
             !ev.target.className.includes("user-icon")
         ) {
-            setIsClicked(false)
+            setIsClickedUser(false)
         }
     }
 
     return (
         <section className="app-header">
-            <nav>
-                <button>
-                    <img src={menuIcon}></img>
+            <div className='menu-logo'>
+                <button onClick={() => onToggleModal('mainMenu', true)} >
+                    <Menu />
                 </button>
-                <NavLink to="/">Dr Nina Pitlik</NavLink>
-            </nav>
+                <p>Dr. Nina Pitlik</p>
+
+            </div>
             <section className='user-options'>
                 {location.pathname == '/' ? <FolderFilter /> : <FileFilter />}
-                <img className="user-icon" src={userIcon} onClick={() => setIsClicked(prev => !prev)}></img>
-                {isClicked && <div ref={userRef} className='user-menu'>
+                <div className='user-icon-container'>
+                    <User className="user-icon" onClick={() => setIsClickedUser(prev => !prev)} />
+                </div>
+                {isClickedUser && <div ref={userRef} className='user-menu'>
                     <button onClick={logout}>Log out</button>
                 </div>}
             </section>

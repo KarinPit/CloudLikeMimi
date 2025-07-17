@@ -10,6 +10,7 @@
 
 
 /*  Pages */
+@import "pages/MainLayout.scss";
 @import "pages/Home.scss";
 @import "pages/FolderIndex.scss";
 @import "pages/Login.scss";
@@ -23,3 +24,4 @@
 @import "cmps/ConfirmModal.scss";
 @import "cmps/ModalOverlay.scss";
 @import "cmps/ForgotPasswordModal.scss";
+@import "cmps/MenuModal.scss";
