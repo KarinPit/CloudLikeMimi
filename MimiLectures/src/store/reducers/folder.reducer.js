@@ -46,8 +46,7 @@ export function folderReducer(state = initialState, cmd = {}) {
         case REMOVE_FOLDER:
             return {
                 ...state,
-                folderData: state.folderData.filter(folder => folder.id !== cmd.id)
-                // favorites: state.favorites.filter(folder => folder.id !== cmd.userId)
+                folderData: state.folderData.filter(folder => folder.id !== cmd.folderId)
             }
         case SET_IS_LOADING:
             return {

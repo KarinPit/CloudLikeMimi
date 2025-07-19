@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import LoadingAnim from '../cmps/LoadingAnim.jsx';
 import { showErrorMsg } from '../services/event-bus.service.js';
-import { saveFolder } from "../store/actions/folder.actions.js"
+import { removeFolder, saveFolder } from "../store/actions/folder.actions.js"
 
 import { loadFoldersData } from "../store/actions/folder.actions.js"
 import { onToggleModal } from '../store/actions/app.actions.js';
@@ -23,6 +23,8 @@ export default function Home() {
     const folderData = useSelector((storeState) => storeState.folderModule.folderData)
     const isLoading = useSelector((storeState) => storeState.folderModule.isLoading)
     const [hoveredFolderId, setHoveredFolderId] = useState(null)
+    const [currentFolderToEdit, setCurrentFolderToEdit] = useState(null)
+    const [currentFolderToDelete, setCurrentFolderToDelete] = useState(null)
 
     function arrangeFolders(colNum) {
         return folderData.map((folder, idx) => {
@@ -35,37 +37,83 @@ export default function Home() {
                         <div className='svg-container'>
                             <FolderIcon />
                         </div>
-                        <p>{folder.name}</p>
-                    </div>
+                        {currentFolderToEdit?.id == folder.id &&
+                            <div className='edit-form'>
+                                <form>
+                                    <input type='text' value={currentFolderToEdit.name} onClick={(ev) => ev.preventDefault()} onChange={(ev) => setCurrentFolderToEdit((prev) => ({ ...prev, name: ev.target.value }))}></input>
+                                    <div className='btn-container'>
+                                        <button type='button' onClick={(ev) => onEditfFolder(ev)}>Save</button>
+                                        <button type='button' onClick={(ev) => { ev.preventDefault(); setCurrentFolderToEdit(null) }}>Cancel</button>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+
+                        {currentFolderToDelete?.id == folder.id &&
+                            <div className='delete-form'>
+                                <p>Delete "{currentFolderToDelete.name}"?</p>
+                                <button className='close-btn'>
+                                    <XIcon />
+                                </button>
+                                <div className='btn-container'>
+                                    <button onClick={(ev) => onRemovefFolder(ev)}>Delete</button>
+                                    <button onClick={(ev) => { ev.preventDefault(); setCurrentFolderToDelete(null) }}>Cancel</button>
+                                </div>
+                            </div>
+                        }
+
+                        {!(currentFolderToEdit?.id === folder.id || currentFolderToDelete?.id === folder.id) && (
+                            <p>{folder.name}</p>
+                        )}
+                    </div >
+
                     <div className={`folder-options ${hoveredFolderId === folder.id ? 'show' : ''}`}>
-                        <button
-                            onClick={(e) => {
-                                e.preventDefault()
-                                // handleEdit(folder.id, folder.name)
-                            }}
-                        >
+                        <button onClick={(ev) => {
+                            ev.preventDefault()
+                            setCurrentFolderToEdit(folder)
+                        }}>
                             <Edit2Icon />
                         </button>
-                        <button
-                            onClick={(e) => {
-                                e.preventDefault()
-                                // setShowDeleteConfirm(folder.id)
-                            }}
-                        >
+                        <button onClick={(ev) => {
+                            ev.preventDefault()
+                            setCurrentFolderToDelete(folder)
+                        }}>
                             <Trash2Icon />
                         </button>
                     </div>
-                </NavLink>)
+                </NavLink >)
         })
     }
 
-    async function onAddFolder() {
+    async function onAddFolder(ev) {
         try {
             onToggleModal('addFolder', true)
             showSuccessMsg('Robot added successfully')
         } catch (err) {
             console.log('Had issues adding robot', err);
             showErrorMsg('Could not add robot')
+        }
+    }
+
+    async function onEditfFolder(ev) {
+        ev.preventDefault()
+        try {
+            await saveFolder(currentFolderToEdit)
+            setCurrentFolderToEdit(null)
+        }
+        catch (err) {
+            console.log('Error in updating folder: ', err);
+        }
+    }
+
+    async function onRemovefFolder(ev) {
+        ev.preventDefault()
+        try {
+            await removeFolder(currentFolderToDelete.id)
+            setCurrentFolderToDelete(null)
+        }
+        catch (err) {
+            console.log('Error in updating folder: ', err);
         }
     }
 

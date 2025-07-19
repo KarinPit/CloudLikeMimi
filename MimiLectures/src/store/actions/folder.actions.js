@@ -45,8 +45,8 @@ export async function saveFolder(folder) {
 
 export async function removeFolder(folderId) {
     try {
-        const removedFolder = await folderService.remove(folderId)
-        store.dispatch({ type: REMOVE_FOLDER, folder: removedFolder })
+        await folderService.remove(folderId)
+        store.dispatch({ type: REMOVE_FOLDER, folderId })
     } catch (err) {
         console.log('Had issues saving robots', err)
         throw err

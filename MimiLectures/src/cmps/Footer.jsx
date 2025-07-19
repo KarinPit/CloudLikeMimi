@@ -10,7 +10,9 @@ export default function Footer() {
     return (
         <section className="footer">
             <section>
-                <p>Developed by Karin Pitlik</p>
+                <p>Developed by Karin Pitlik
+                    {/* Dedicated to our beloved husband and father- Dr. Silvio Pitlik */}
+                </p>
             </section>
             <nav>
                 {/* <NavLink to="/">Link1</NavLink>
