@@ -6,14 +6,9 @@ import FileFilter from './FileFilter'
 
 import {
     Menu,
-    Search,
     User,
-    XIcon,
-    HomeIcon,
-    FolderIcon,
-    SettingsIcon,
-    HelpCircleIcon,
     LogOutIcon,
+    Settings
 } from 'lucide-react'
 import { logout } from '../store/actions/user.actions'
 import MenuModal from './MenuModal'
@@ -66,7 +61,26 @@ export default function AppHeader() {
                     <User className="user-icon" onClick={() => setIsClickedUser(prev => !prev)} />
                 </div>
                 {isClickedUser && <div ref={userRef} className='user-menu'>
-                    <button onClick={logout}>Log out</button>
+                    <div className='user-info'>
+                        <p>Dr. Nina Pitlik</p>
+                        <p>ninpitlik@gmail.com</p>
+                    </div>
+                    <div className="user-profile-settings">
+                        <button>
+                            <User />
+                            <p>Your Profile</p>
+                        </button>
+                        <button>
+                            <Settings />
+                            <p>Settings</p>
+                        </button>
+                    </div>
+                    <div className='logout-container'>
+                        <button onClick={logout}>
+                            <LogOutIcon />
+                            <p>Log out</p>
+                        </button>
+                    </div>
                 </div>}
             </section>
         </section>
