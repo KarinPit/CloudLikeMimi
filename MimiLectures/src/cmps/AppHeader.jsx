@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
-import FolderFilter from './FolderFilter'
+import FilterModal from './FilterModal'
 import FileFilter from './FileFilter'
 
 import {
@@ -56,7 +56,8 @@ export default function AppHeader() {
 
             </div>
             <section className='user-options'>
-                {location.pathname == '/' ? <FolderFilter /> : <FileFilter />}
+                <FilterModal />
+                {/* {location.pathname == '/' ? <FolderFilter /> : <FileFilter />} */}
                 <div className='user-icon-container'>
                     <User className="user-icon" onClick={() => setIsClickedUser(prev => !prev)} />
                 </div>

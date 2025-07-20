@@ -2,23 +2,25 @@ import React, { useEffect, useRef, useState } from 'react'
 // import { useEffectUpdate } from '../customHooks/useEffectUpdate'
 import { utilService } from '../services/util.service'
 import { useDispatch, useSelector } from 'react-redux'
-import { useForm } from '../customHooks/useForm'
-import searchIcon from "../assets/imgs/Appheader/search.svg"
-import { setFilterBy } from '../store/actions/folder.actions'
 import { useSearchParams } from 'react-router-dom'
+
+import { useForm } from '../customHooks/useForm'
+import { setFilterBy } from '../store/actions/folder.actions'
 import { folderService } from '../services/folder.service'
+
 import {
     Search,
     ClockIcon,
     XIcon
 } from 'lucide-react'
 
-export default function FolderFilter() {
+export default function FilterModal() {
     const filterBy = useSelector((storeState) => storeState.folderModule.filterBy)
+    const searchResults = useSelector((storeState) => storeState.folderModule.folderData)
     const [searchParams, setSearchParams] = useSearchParams()
     const [filterByToEdit, handleChange] = useForm(filterBy, onSetFilter)
     const [isClicked, setIsClicked] = useState(false)
-    const [recentSearches, setSearchQuery] = useState([])
+    const [recentSearches, setRecentSearches] = useState([])
     const modalRef = useRef(null)
 
     useEffect(() => {
@@ -28,6 +30,10 @@ export default function FolderFilter() {
     useEffect(() => {
         setSearchParams(filterBy)
     }, [filterBy])
+
+    useEffect(() => {
+        console.log(recentSearches)
+    }, [recentSearches])
 
     useEffect(() => {
         if (isClicked) {
@@ -56,17 +62,13 @@ export default function FolderFilter() {
         setFilterBy(filterByToEdit)
     }
 
-    function onSubmitFilter(ev) {
-        ev.preventDefault()
-        onSetFilter(filterByToEdit)
-    }
+    // function onSubmitFilter(ev) {
+    //     ev.preventDefault()
+    //     onSetFilter(filterByToEdit)
+    // }
 
     return (
         <>
-            {/* <form className={`folder-filter ${isClicked ? 'show' : 'hide'}`} onSubmit={onSubmitFilter}>
-                <input ref={inputRef} id="name" name="name" type='text' placeholder='search folder...' value={filterBy.name || ''} onChange={handleChange}></input>
-            </form> */}
-
             <button className="search-button" onClick={() => setIsClicked(true)}>
                 <Search />
             </button>
@@ -84,7 +86,14 @@ export default function FolderFilter() {
                             onChange={handleChange}
                         />
                         {filterBy.name && (
-                            <button onClick={() => handleChange({ target: { name: 'name', value: '', type: 'text' } })}>
+                            <button onClick={() => {
+                                const updatedFilter = { target: { name: 'name', value: '', type: 'text' } }
+                                handleChange(updatedFilter)
+                                setRecentSearches((prev) => {
+                                    const updatedSearches = [filterBy.name, ...prev.filter(val => val !== filterBy.name)]
+                                    return updatedSearches.slice(0, 4)
+                                })
+                            }}>
                                 <XIcon />
                             </button>
                         )}
@@ -94,61 +103,61 @@ export default function FolderFilter() {
                         {!filterBy.name && (
                             <>
                                 <div>
-                                    <ClockIcon size={16} className="mr-2" />
+                                    <ClockIcon />
                                     <h3>Recent searches</h3>
                                 </div>
-                                <div className="space-y-1">
+                                <div>
                                     {recentSearches?.map((term, i) => (
-                                        <button
-                                            key={i}
-                                            className="w-full text-left px-3 py-2 rounded-md hover:bg-gray-100 text-gray-700 flex items-center"
-                                            onClick={() => setSearchQuery(term)}
-                                        >
-                                            <Search size={16} className="text-gray-400 mr-3" />
-                                            {term}
+                                        <button key={i} onClick={() => {
+                                            const updatedFilter = { target: { name: 'name', value: term, type: 'text' } }
+                                            handleChange(updatedFilter)
+                                        }} >
+                                            <Search />
+                                            <p>{term}</p>
                                         </button>
                                     ))}
                                 </div>
                             </>
                         )}
-                        {/* {filterBy.name && (
-                            <div className="p-4">
-                                <h3 className="text-sm font-medium text-gray-500 mb-3">
+                        {filterBy.name && (
+                            <div className='search-results'>
+                                <h3>
                                     {searchResults.length > 0
                                         ? `${searchResults.length} results found`
                                         : 'No results found'}
                                 </h3>
                                 {searchResults.length > 0 ? (
-                                    <div className="space-y-1">
-                                        {searchResults.map((doc) => (
+                                    <div className="file-container">
+                                        {searchResults.map((doc, idx) => (
                                             <div
-                                                key={doc.id}
-                                                className="flex items-center px-3 py-2 rounded-md hover:bg-gray-100 cursor-pointer"
+                                                key={idx}
+                                                className="file-row"
                                             >
-                                                <div className="p-1.5 rounded-md bg-gray-100 flex items-center justify-center mr-3">
+                                                <div className="file-icon">
                                                     {doc.icon}
                                                 </div>
-                                                <div>
-                                                    <p className="font-medium text-gray-800">{doc.name}</p>
-                                                    <p className="text-xs text-gray-500">
+                                                <div className="file-info">
+                                                    <p className="file-name">{doc.name}</p>
+                                                    <p className="file-date-modified">
                                                         {doc.typeLabel} • {doc.dateModified}
                                                     </p>
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
+
                                 ) : (
                                     <div className="text-center py-8">
                                         <p className="text-gray-500">
-                                            No documents found matching "{searchQuery}"
+                                            No documents found matching "{filterBy.name}"
                                         </p>
                                     </div>
                                 )}
                             </div>
-                        )} */}
+                        )}
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     )
 }
