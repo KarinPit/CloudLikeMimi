@@ -1,0 +1,109 @@
+.folder-filter,
+.file-filter {
+    position: fixed;
+    top: rem(80px);
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 100%;
+    max-width: 42rem;
+    height: fit-content;
+    z-index: 50;
+
+    // backdrop-blur: blur(4px);
+    visibility: hidden;
+
+    &.show {
+        visibility: visible;
+    }
+
+    .filter-container {
+        overflow: hidden;
+        border-radius: 0.5rem;
+        background-color: #ffffff;
+        transition-property: all;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 300ms;
+        transition-duration: 300ms;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+        .input-container {
+            display: flex;
+            padding-top: 0.75rem;
+            padding-bottom: 0.75rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            align-items: center;
+            border-bottom-width: 1px;
+            border-color: #E5E7EB;
+
+            svg {
+                &.search-icon {
+                    width: rem(20px);
+                    height: rem(20px);
+                    margin-right: 0.75rem;
+                    color: #9CA3AF;
+                }
+            }
+
+            input {
+                flex: 1 1 0%;
+                outline-style: none;
+                border: none;
+                font-size: 1.125rem;
+                line-height: 1.75rem;
+            }
+
+            button {
+                width: fit-content;
+                height: fit-content;
+                padding: 0.25rem;
+                border-radius: 50%;
+                color: #9CA3AF;
+
+                &:hover {
+                    color: #4B5563;
+                    background-color: #F3F4F6;
+                }
+
+                svg {
+                    width: rem(18px);
+                    height: rem(18px);
+                }
+            }
+        }
+
+        .search-history-container {
+            overflow-y: auto;
+            max-height: 70vh;
+
+            div:nth-child(1) {
+                display: flex;
+                margin-bottom: 0.75rem;
+                align-items: center;
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+                font-weight: 500;
+                color: #6B7280;
+                padding: rem(16px);
+
+                h3 {
+                    font-size: 0.875rem;
+                    line-height: 1.25rem;
+                    font-weight: 500;
+                    color: #6B7280;
+                }
+
+                svg {
+                    width: rem(16px);
+                    height: rem(16px);
+                    margin-right: 0.5rem;
+                }
+            }
+
+            div:nth-child(2) {
+                margin-top: rem(4px);
+            }
+        }
+    }
+}

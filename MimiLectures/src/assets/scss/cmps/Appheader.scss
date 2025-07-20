@@ -58,34 +58,34 @@
         align-items: center;
         gap: rem(16px);
 
-        form {
-            input {
-                transition: all 0.2s ease-out;
-                border-radius: rem(8px);
-                height: rem(28px);
-                border: rem(1px) solid grey;
-                padding: rem(8px);
+        // form {
+        //     input {
+        //         transition: all 0.2s ease-out;
+        //         border-radius: rem(8px);
+        //         height: rem(28px);
+        //         border: rem(1px) solid grey;
+        //         padding: rem(8px);
 
-                &:focus {
-                    outline: none;
-                    box-shadow: none;
-                }
-            }
+        //         &:focus {
+        //             outline: none;
+        //             box-shadow: none;
+        //         }
+        //     }
 
-            &.hide {
-                input {
-                    opacity: 0;
-                    width: 0;
-                }
-            }
+        //     &.hide {
+        //         input {
+        //             opacity: 0;
+        //             width: 0;
+        //         }
+        //     }
 
-            &.show {
-                input {
-                    opacity: 1;
-                    width: 300px;
-                }
-            }
-        }
+        //     &.show {
+        //         input {
+        //             opacity: 1;
+        //             width: 300px;
+        //         }
+        //     }
+        // }
 
         .user-icon-container {
             display: flex;
