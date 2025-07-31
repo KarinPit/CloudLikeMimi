@@ -4,6 +4,7 @@ import { utilService } from './util.service'
 const STORAGE_KEY_FILES = 'files'
 
 export const fileService = {
+	query,
 	getFiles,
 	getById,
 	getByFolderId,
@@ -25,6 +26,21 @@ function getDefaultFilter() {
 	})
 }
 
+async function query(filterBy) {
+	let files = await storageService.query(STORAGE_KEY_FILES)
+	if (filterBy) {
+		files = files.filter(file =>
+			Object.entries(filterBy).every(([key, value]) => {
+				if (value === '') return true;
+				if (typeof value === 'string') {
+					return file[key]?.toLowerCase().includes(value.toLowerCase());
+				}
+				return file[key] === value;
+			})
+		);
+	}
+	return files
+}
 function getFilterFromParams(searchParams) {
 	const defaultFilter = getDefaultFilter()
 	const filterBy = {

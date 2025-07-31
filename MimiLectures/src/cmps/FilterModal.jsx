@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 
 import { useForm } from '../customHooks/useForm'
-import { setFilterBy } from '../store/actions/folder.actions'
-import { folderService } from '../services/folder.service'
+import { loadAllFiles, setFilterBy } from '../store/actions/file.actions'
+import { fileService } from '../services/file.service'
 
 import {
     Search,
@@ -15,8 +15,9 @@ import {
 } from 'lucide-react'
 
 export default function FilterModal() {
-    const filterBy = useSelector((storeState) => storeState.folderModule.filterBy)
-    const searchResults = useSelector((storeState) => storeState.folderModule.folderData)
+    const filterBy = useSelector((storeState) => storeState.fileModule.filterBy)
+    const isLoading = useSelector((storeState) => storeState.fileModule.isLoading)
+    const searchResults = useSelector((storeState) => storeState.fileModule.files)
     const [searchParams, setSearchParams] = useSearchParams()
     const [filterByToEdit, handleChange] = useForm(filterBy, onSetFilter)
     const [isClicked, setIsClicked] = useState(false)
@@ -24,16 +25,12 @@ export default function FilterModal() {
     const modalRef = useRef(null)
 
     useEffect(() => {
-        setFilterBy(folderService.getFilterFromParams(searchParams))
+        setFilterBy(fileService.getFilterFromParams(searchParams))
     }, [])
 
     useEffect(() => {
         setSearchParams(filterBy)
     }, [filterBy])
-
-    useEffect(() => {
-        console.log(recentSearches)
-    }, [recentSearches])
 
     useEffect(() => {
         if (isClicked) {
@@ -60,12 +57,8 @@ export default function FilterModal() {
 
     function onSetFilter() {
         setFilterBy(filterByToEdit)
+        loadAllFiles(filterByToEdit)
     }
-
-    // function onSubmitFilter(ev) {
-    //     ev.preventDefault()
-    //     onSetFilter(filterByToEdit)
-    // }
 
     return (
         <>
@@ -119,7 +112,8 @@ export default function FilterModal() {
                                 </div>
                             </>
                         )}
-                        {filterBy.name && (
+
+                        {!isLoading ? filterBy.name && (
                             <div className='search-results'>
                                 <h3>
                                     {searchResults.length > 0
@@ -146,15 +140,54 @@ export default function FilterModal() {
                                         ))}
                                     </div>
 
-                                ) : (
-                                    <div className="text-center py-8">
-                                        <p className="text-gray-500">
-                                            No documents found matching "{filterBy.name}"
-                                        </p>
-                                    </div>
-                                )}
+                                )
+                                    : (
+                                        <div className="text-center py-8">
+                                            <p className="text-gray-500">
+                                                No documents found matching "{filterBy.name}"
+                                            </p>
+                                        </div>
+                                    )}
                             </div>
-                        )}
+                        ) : ''}
+
+                        {/* {filterBy.name && (
+                            <div className='search-results'>
+                                <h3>
+                                    {searchResults.length > 0
+                                        ? `${searchResults.length} results found`
+                                        : 'No results found'}
+                                </h3>
+                                {searchResults.length > 0 ? (
+                                    <div className="file-container">
+                                        {searchResults.map((doc, idx) => (
+                                            <div
+                                                key={idx}
+                                                className="file-row"
+                                            >
+                                                <div className="file-icon">
+                                                    {doc.icon}
+                                                </div>
+                                                <div className="file-info">
+                                                    <p className="file-name">{doc.name}</p>
+                                                    <p className="file-date-modified">
+                                                        {doc.typeLabel} • {doc.dateModified}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                )
+                                    : (
+                                        <div className="text-center py-8">
+                                            <p className="text-gray-500">
+                                                No documents found matching "{filterBy.name}"
+                                            </p>
+                                        </div>
+                                    )}
+                            </div>
+                        )} */}
                     </div>
                 </div>
             </div >

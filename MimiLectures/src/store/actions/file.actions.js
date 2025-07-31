@@ -42,6 +42,21 @@ export function setFilterBy(fieldsToUpdate) {
     store.dispatch({ type: SET_FILTER_BY_FILE, fieldsToUpdate })
 }
 
+export async function loadAllFiles(filterBy) {
+    store.dispatch({ type: SET_IS_LOADING, isLoading: true })
+    try {
+        // const { filterBy } = store.getState().fileModule
+        const files = await fileService.query(filterBy)
+        store.dispatch({ type: SET_FILES, files: files })
+    } catch (err) {
+        console.log('Had issues loading all files', err)
+        throw err
+    } finally {
+        store.dispatch({ type: SET_IS_LOADING, isLoading: false })
+    }
+}
+
+
 
 // export async function loadFoldersData() {
 //     store.dispatch({ type: SET_IS_LOADING, isLoading: true })
