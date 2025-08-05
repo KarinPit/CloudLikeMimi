@@ -92,24 +92,7 @@ export default function FolderIndex() {
                 return null
         }
     }
-    // function getExtensionSVG(extension, cName) {
-    //     switch (extension) {
-    //         case 'docx':
-    //             return <img className={cName} src={docxIcon} alt="docx file icon" />
-    //         case 'txt':
-    //             return <img className={cName} src={txtIcon} alt="txt file icon" />
-    //         case 'pptx':
-    //             return <img className={cName} src={txtIcon} alt="pptx file icon" />
-    //         case 'pdf':
-    //             return <img className={cName} src={pdfIcon} alt="pdf file icon" />
-    //         case 'xlsx':
-    //             return <img className={cName} src={xlsxIcon} alt="xlsx file icon" />
-    //         case 'url':
-    //             return <img className={cName} src={linkIcon} alt="link icon" />
-    //         default:
-    //             return null
-    //     }
-    // }
+
     // loading animation until data is collected
     if (isLoading || !currentFolder) return (
         <section className="folder-index page-grid">
@@ -120,91 +103,14 @@ export default function FolderIndex() {
             </div>
         </section>
     )
-    // return (
-    //     <section className="folder-index page-grid">
-    //         <div className="header-with-button">
-    //             <div className="edit-folder">
-    //                 <h1>{`${currentFolder.name}`}</h1>
-    //                 <button onClick={onEditFolder}>
-    //                     <img src={editIcon}></img>
-    //                 </button>
-    //             </div>
-    //             <div className='main-button add-file'>
-    //                 <UploadWidget folderId={currentFolder.id} />
-    //             </div>
-    //         </div>
-    //         {files.length > 0 ? currentWidth <= smallScreen ?
-    //             // layout for small screens
-    //             <div className="folder-info mobile">
-    //                 {files.map((file, idx) => {
-    //                     return (
-    //                         <div key={idx} className="file-info">
-    //                             <div className="img-container">
-    //                                 {getExtensionSVG(file.extension, "file-img")}
-    //                                 <button>
-    //                                     <img className="vert-dots" src={vertDotsIcon}></img>
-    //                                 </button>
-    //                             </div>
-    //                             <p>{file.name}</p>
-    //                         </div>
-    //                     )
-    //                 })}
-
-    //             </div>
-    //             :
-    //             // layout for normal and above screens
-    //             <div className="folder-info">
-    //                 <div className="file-info">
-    //                     <table>
-    //                         <thead>
-    //                             <tr>
-    //                                 <th>File Name</th>
-    //                                 <th>Type</th>
-    //                                 <th>Date Modified</th>
-    //                                 <th>Size</th>
-    //                                 <th>Actions</th>
-    //                             </tr>
-    //                         </thead>
-    //                         <tbody>
-    //                             {files.map((file, idx) => {
-    //                                 return (<tr key={idx}>
-    //                                     <td>{getExtensionSVG(file.extension, "file-img")} {file.name}</td>
-    //                                     <td>{file.extension}</td>
-    //                                     <td>{file.dateModified}</td>
-    //                                     <td>{file.size}</td>
-    //                                     <td>
-    //                                         <div className="file-actions">
-    //                                             <button onClick={() => downloadFile('abcd123')}>
-    //                                                 <img src={downloadIcon}></img>
-    //                                             </button>
-    //                                             <button onClick={() => deleteFile(file.id)}>
-    //                                                 <img src={trashIcon}></img>
-    //                                             </button>
-    //                                         </div>
-    //                                     </td>
-    //                                 </tr>)
-    //                             })}
-    //                         </tbody>
-    //                     </table>
-
-    //                 </div>
-
-    //             </div>
-    //             : <div className="empty-folder">
-    //                 <img src={EmptyFolder}></img>
-    //                 <p>No files to show...</p>
-    //             </div>
-    //         }
-    //     </section >
-    // )
 
     return (
         <>
-            <div className="title-container">
+            <div className="folder-index title-container">
                 <div>
                     <h1>{currentFolder.name}</h1>
                     <button className="edit-title"
-                        // onClick={() => setIsEditTitleModalOpen(true)}
+                        onClick={() => onToggleModal('editFoldetTitle', true)}
                         aria-label="Edit title">
                         <Pencil />
                     </button>
@@ -290,3 +196,83 @@ export default function FolderIndex() {
         </>
     )
 }
+
+
+
+// return (
+//     <section className="folder-index page-grid">
+//         <div className="header-with-button">
+//             <div className="edit-folder">
+//                 <h1>{`${currentFolder.name}`}</h1>
+//                 <button onClick={onEditFolder}>
+//                     <img src={editIcon}></img>
+//                 </button>
+//             </div>
+//             <div className='main-button add-file'>
+//                 <UploadWidget folderId={currentFolder.id} />
+//             </div>
+//         </div>
+//         {files.length > 0 ? currentWidth <= smallScreen ?
+//             // layout for small screens
+//             <div className="folder-info mobile">
+//                 {files.map((file, idx) => {
+//                     return (
+//                         <div key={idx} className="file-info">
+//                             <div className="img-container">
+//                                 {getExtensionSVG(file.extension, "file-img")}
+//                                 <button>
+//                                     <img className="vert-dots" src={vertDotsIcon}></img>
+//                                 </button>
+//                             </div>
+//                             <p>{file.name}</p>
+//                         </div>
+//                     )
+//                 })}
+
+//             </div>
+//             :
+//             // layout for normal and above screens
+//             <div className="folder-info">
+//                 <div className="file-info">
+//                     <table>
+//                         <thead>
+//                             <tr>
+//                                 <th>File Name</th>
+//                                 <th>Type</th>
+//                                 <th>Date Modified</th>
+//                                 <th>Size</th>
+//                                 <th>Actions</th>
+//                             </tr>
+//                         </thead>
+//                         <tbody>
+//                             {files.map((file, idx) => {
+//                                 return (<tr key={idx}>
+//                                     <td>{getExtensionSVG(file.extension, "file-img")} {file.name}</td>
+//                                     <td>{file.extension}</td>
+//                                     <td>{file.dateModified}</td>
+//                                     <td>{file.size}</td>
+//                                     <td>
+//                                         <div className="file-actions">
+//                                             <button onClick={() => downloadFile('abcd123')}>
+//                                                 <img src={downloadIcon}></img>
+//                                             </button>
+//                                             <button onClick={() => deleteFile(file.id)}>
+//                                                 <img src={trashIcon}></img>
+//                                             </button>
+//                                         </div>
+//                                     </td>
+//                                 </tr>)
+//                             })}
+//                         </tbody>
+//                     </table>
+
+//                 </div>
+
+//             </div>
+//             : <div className="empty-folder">
+//                 <img src={EmptyFolder}></img>
+//                 <p>No files to show...</p>
+//             </div>
+//         }
+//     </section >
+// )

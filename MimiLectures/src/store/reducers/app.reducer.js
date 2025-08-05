@@ -3,7 +3,7 @@ export const SET_SCREEN_WIDTH = 'SET_SCREEN_WIDTH'
 
 
 const initialState = {
-	modals: { addFolder: null, editFolder: null, confirmModal: null, forgotPassword: null, mainMenu: null },
+	modals: { addFolder: null, editFolder: null, confirmModal: null, forgotPassword: null, mainMenu: null, editFoldetTitle: null },
 	screenWidth: window.innerWidth,
 	smallScreen: 550,
 	normalScreen: 950,

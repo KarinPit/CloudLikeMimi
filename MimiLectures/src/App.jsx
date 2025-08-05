@@ -14,6 +14,7 @@ import FolderIndex from './pages/FolderIndex';
 import AddFolderModal from './cmps/AddFolderModal';
 import EditFolderModal from './cmps/EditFolderModal';
 import ConfirmModal from "./cmps/ConfirmModal"
+import EditFolderTitle from './cmps/EditFolderTitle';
 import ModalOverlay from './cmps/ModalOverlay';
 import MenuModal from './cmps/MenuModal';
 
@@ -39,6 +40,8 @@ export function App() {
                 return <EditFolderModal />
             case 'confirmModal':
                 return <ConfirmModal {...modalValue} />
+            case 'editFoldetTitle':
+                return <EditFolderTitle />
             case 'forgotPassword':
                 return 'bg-only'
             case 'mainMenu':
