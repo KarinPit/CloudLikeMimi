@@ -6,11 +6,13 @@ export const REMOVE_FILE = 'REMOVE_FILE'
 export const UPDATE_FILE = 'UPDATE_FILE'
 export const SET_IS_LOADING = 'SET_IS_LOADING'
 export const SET_FILTER_BY_FILE = 'SET_FILTER_BY_FILE'
+export const SET_CURRENT_FILE = 'SET_CURRENT_FILE'
 
 const initialState = {
     files: [],
     filterBy: fileService.getDefaultFilter(),
-    isLoading: true
+    isLoading: true,
+    currentFile: null
 }
 
 
@@ -43,6 +45,8 @@ export function fileReducer(state = initialState, cmd = {}) {
                 ...state,
                 filterBy: { ...state.filterBy, ...cmd.fieldsToUpdate }
             }
+        case SET_CURRENT_FILE:
+            return { ...state, currentFile: cmd.file }
         default:
             return state
     }

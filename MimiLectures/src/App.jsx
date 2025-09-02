@@ -17,6 +17,7 @@ import ConfirmModal from "./cmps/ConfirmModal"
 import EditFolderTitle from './cmps/EditFolderTitle';
 import ModalOverlay from './cmps/ModalOverlay';
 import MenuModal from './cmps/MenuModal';
+import EditFileModal from './cmps/EditFileModal';
 
 export function App() {
     const location = useLocation()
@@ -42,6 +43,8 @@ export function App() {
                 return <ConfirmModal {...modalValue} />
             case 'editFoldetTitle':
                 return <EditFolderTitle />
+            case 'editFileModal':
+                return <EditFileModal />
             case 'forgotPassword':
                 return 'bg-only'
             case 'mainMenu':

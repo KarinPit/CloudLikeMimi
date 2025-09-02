@@ -1,7 +1,7 @@
 import { fileService } from "../../services/file.service.js";
 import { uploadService } from "../../services/upload.service.js";
 
-import { REMOVE_FILE, SET_FILES, SET_FILTER_BY_FILE, SET_IS_LOADING } from "../reducers/file.reducer.js"
+import { ADD_FILE, REMOVE_FILE, SET_CURRENT_FILE, SET_FILES, SET_FILTER_BY_FILE, SET_IS_LOADING } from "../reducers/file.reducer.js"
 
 import { store } from "../store.js"
 
@@ -28,15 +28,15 @@ export async function deleteFile(fileId) {
     }
 }
 
-export async function uploadFileToCloud(ev) {
-    try {
-        uploadService.uploadFileToCloud(ev)
-    }
-    catch (err) {
-        console.log('Had issues uploading file', err)
-        throw err
-    }
-}
+// export async function uploadFileToCloud(ev) {
+//     try {
+//         uploadService.uploadFileToCloud(ev)
+//     }
+//     catch (err) {
+//         console.log('Had issues uploading file', err)
+//         throw err
+//     }
+// }
 
 export function setFilterBy(fieldsToUpdate) {
     store.dispatch({ type: SET_FILTER_BY_FILE, fieldsToUpdate })
@@ -56,7 +56,24 @@ export async function loadAllFiles(filterBy) {
     }
 }
 
+export async function setCurrentFile(file) {
+    try {
+        store.dispatch({ type: SET_CURRENT_FILE, file })
+    } catch (err) {
+        console.log('FileActions: err in setCurrentFile', err)
+    }
+}
 
+export async function saveFile(folderId, file) {
+    try {
+        await fileService.save(file)
+        await getFilesByFolderId(folderId)
+        // store.dispatch({ type: ADD_FILE, file: savedFile })
+    } catch (err) {
+        console.log('Had issues saving file', err)
+        throw err
+    }
+}
 
 // export async function loadFoldersData() {
 //     store.dispatch({ type: SET_IS_LOADING, isLoading: true })
@@ -71,13 +88,4 @@ export async function loadAllFiles(filterBy) {
 //         store.dispatch({ type: SET_IS_LOADING, isLoading: false })
 //     }
 // }
-// export async function saveFile(file) {
-//     try {
-//         const type = file.id ? UPDATE_FOLDER : ADD_FOLDER
-//         const savedFile = await fileService.save(file)
-//         store.dispatch({ type, file: savedFile })
-//     } catch (err) {
-//         console.log('Had issues saving file', err)
-//         throw err
-//     }
-// }
+

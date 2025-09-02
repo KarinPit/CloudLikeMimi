@@ -325,6 +325,36 @@
                             align-items: center;
                             border-radius: 0.375rem;
                             background-color: #F3F4F6;
+
+                            svg {
+                                &.word-icon {
+                                    color: #DC2626;
+                                }
+
+                                &.text-icon {
+                                    color: #d97706;
+                                }
+
+                                &.pptx-icon {
+                                    color: #ab620f;
+                                }
+
+                                &.pdf-icon {
+                                    color: #DC2626;
+                                }
+
+                                &.xlsx-icon {
+                                    color: #059669;
+                                }
+
+                                &.web-icon {
+                                    color: #16a34a;
+                                }
+
+                                &.folder-icon {
+                                    color: #2563eb;
+                                }
+                            }
                         }
 
                         p {

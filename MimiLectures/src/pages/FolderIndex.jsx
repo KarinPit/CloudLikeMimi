@@ -4,25 +4,16 @@ import { useSelector } from "react-redux"
 
 import UploadWidget from '../cmps/UploadWidget'
 // import { folderService } from "../services/folder.service"
-import { deleteFile, getFilesByFolderId, uploadFileToCloud } from "../store/actions/file.actions"
+import { deleteFile, getFilesByFolderId, setCurrentFile } from "../store/actions/file.actions"
 
 import LoadingAnim from "../cmps/LoadingAnim"
-import editIcon from "../assets/imgs/FolderIndex/edit.svg"
-import downloadIcon from "../assets/imgs/FolderIndex/download.svg"
-import trashIcon from "../assets/imgs/FolderIndex/trash.svg"
-import vertDotsIcon from "../assets/imgs/FolderIndex/dots.svg"
-import docxIcon from "../assets/imgs/FolderIndex/docx.svg"
-import txtIcon from "../assets/imgs/FolderIndex/txt.svg"
-import pdfIcon from "../assets/imgs/FolderIndex/pdf.svg"
-import xlsxIcon from "../assets/imgs/FolderIndex/xlsx.svg"
-import linkIcon from "../assets/imgs/FolderIndex/link.svg"
-import EmptyFolder from "../assets/imgs/FolderIndex/empty-wallet.svg"
 import { onToggleModal } from "../store/actions/app.actions"
 import { loadFolderById } from "../store/actions/folder.actions"
 
 import {
-    Download, Trash2, Pencil
+    Download, Trash2, Pencil, FileTextIcon, FileType2Icon, PresentationIcon, FileSpreadsheetIcon, LinkIcon, FolderIcon
 } from 'lucide-react'
+
 
 export default function FolderIndex() {
     const currentWidth = useSelector((storeState) => storeState.appModule.screenWidth)
@@ -52,44 +43,56 @@ export default function FolderIndex() {
         }
     }
 
-    async function loadFiles(folderId) {
-        try {
-            await getFilesByFolderId(folderId)
-        }
-        catch (err) {
-            console.log('Had issues loading files\nError:', err);
-        }
-    }
+    // async function loadFiles(folderId) {
+    //     try {
+    //         await getFilesByFolderId(folderId)
+    //     }
+    //     catch (err) {
+    //         console.log('Had issues loading files\nError:', err);
+    //     }
+    // }
 
-    async function uploadFile(ev) {
-        try {
-            await uploadFileToCloud(ev)
-        }
-        catch (err) {
-            console.log('Had issues loading files\nError:', err);
-        }
-    }
+    // async function uploadFile(ev) {
+    //     try {
+    //         await uploadFileToCloud(ev)
+    //     }
+    //     catch (err) {
+    //         console.log('Had issues loading files\nError:', err);
+    //     }
+    // }
 
-    async function downloadFile() {
-        console.log('downloading file');
-    }
+    // async function downloadFile() {
+    //     console.log('downloading file');
+    // }
 
-    function getExtensionLabel(extension) {
+    function getInfoFromExtension(extension) {
         switch (extension) {
             case 'docx':
-                return 'Word Document'
+                return { label: 'Word Document', icon: <FileTextIcon className='word-icon' /> }
             case 'txt':
-                return 'Text Document'
+                return { label: 'Text Document', icon: <FileType2Icon className='text-icon' /> }
             case 'pptx':
-                return 'PowerPoint Presentation'
+                return { label: 'PowerPoint Presentation', icon: <PresentationIcon className='pptx-icon' /> }
             case 'pdf':
-                return 'PDF Document'
+                return { label: 'PDF Document', icon: <FileTextIcon className='pdf-icon' /> }
             case 'xlsx':
-                return 'Excel Spreadsheet'
+                return { label: 'Excel Spreadsheet', icon: <FileSpreadsheetIcon className='xlsx-icon' /> }
+            case 'jpg':
+                return { label: 'Excel Spreadsheet', icon: <FileSpreadsheetIcon className='xlsx-icon' /> }
+            case 'psd':
+                return { label: 'Excel Spreadsheet', icon: <FileSpreadsheetIcon className='xlsx-icon' /> }
+            case 'mp3':
+                return { label: 'Excel Spreadsheet', icon: <FileSpreadsheetIcon className='xlsx-icon' /> }
+            case 'mp4':
+                return { label: 'Excel Spreadsheet', icon: <FileSpreadsheetIcon className='xlsx-icon' /> }
             case 'url':
-                return 'Web Link'
+                return { label: 'Web Link', icon: <LinkIcon className='web-icon' /> }
+            case 'zip':
+                return { label: 'A folder', icon: <FolderIcon className='folder-icon' /> }
+            case 'folder':
+                return { label: 'A folder', icon: <FolderIcon className='folder-icon' /> }
             default:
-                return null
+                return { label: 'Web Link', icon: <LinkIcon className='web-icon' /> }
         }
     }
 
@@ -115,11 +118,14 @@ export default function FolderIndex() {
                         <Pencil />
                     </button>
                 </div>
-                <button
-                // onClick={() => setIsFolderModalOpen(true)}
-                >
-                    <p>+ Add file</p>
-                </button>
+                {/* <button
+                    onClick={() => onToggleModal('addFile', true)}
+                > */}
+                {/* <p>+ Add file</p> */}
+                {/* <UploadWidget folderId={currentFolder.id} /> */}
+                {/* </button> */}
+
+                <UploadWidget folderId={currentFolder.id} />
             </div>
 
             <div className="table-container">
@@ -146,10 +152,11 @@ export default function FolderIndex() {
                     <tbody>
                         {files.map((doc) => (
                             <tr key={doc.id}>
+                                {/* {console.log(doc)} */}
                                 <td>
                                     <div>
                                         <div>
-                                            {doc.icon}
+                                            {getInfoFromExtension(doc.extension).icon}
                                         </div>
                                         <p>{doc.name}</p>
                                     </div>
@@ -157,17 +164,20 @@ export default function FolderIndex() {
                                 <td>
                                     <div>
                                         <p>{doc.extension}</p>
-                                        <p>{getExtensionLabel(doc.extension)}</p>
+                                        <p>{getInfoFromExtension(doc.extension).label}</p>
                                     </div>
                                 </td>
                                 <td>{doc.dateModified}</td>
-                                <td>{doc.size}</td>
+                                <td>{doc.size ? doc.size : '—'}</td>
                                 <td>
                                     <div>
                                         {onEditFile && (
                                             <button
-                                                className=""
-                                                title={`Edit ${doc.type === 'Folder' ? 'folder' : 'file'} name`}
+                                                title={`Edit ${doc.extension === 'Folder' ? 'folder' : 'file'} name`}
+                                                onClick={() => {
+                                                    setCurrentFile(doc)
+                                                    onToggleModal('editFileModal', true)
+                                                }}
                                             // onClick={() =>
                                             //     onEditFile({
                                             //         id: doc.id,
