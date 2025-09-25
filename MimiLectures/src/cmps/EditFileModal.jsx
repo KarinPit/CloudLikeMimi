@@ -8,18 +8,23 @@ import { useForm } from '../customHooks/useForm'
 import { useState } from 'react'
 import { saveFile } from '../store/actions/file.actions'
 
-export default function EditFileModal() {
+export default function EditFileTitle() {
+    const currentFolder = useSelector((storeState) => storeState.folderModule.currentFolder)
     const currentFile = useSelector((storeState) => storeState.fileModule.currentFile)
     const [currentFileToEdit, setCurrentFileToEdit] = useState(currentFile)
+
+    function onChangeTitle(ev) {
+        setCurrentFileToEdit((prev) => ({ ...prev, name: ev.target.value }))
+    }
 
     async function onSaveTitle(ev) {
         ev.preventDefault()
         try {
-            await saveFolder(currentFileToEdit)
-            onToggleModal('editFoldetTitle', null)
+            onToggleModal('editFileTitle', null)
+            await saveFile(currentFolder.id, currentFileToEdit)
         }
         catch (err) {
-            console.log('Error in updating folder title: ', err);
+            console.log('Error in updating file title: ', err);
         }
     }
 

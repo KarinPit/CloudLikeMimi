@@ -3,16 +3,18 @@ import { useNavigate, useParams } from "react-router"
 import { useSelector } from "react-redux"
 
 import UploadWidget from '../cmps/UploadWidget'
-// import { folderService } from "../services/folder.service"
-import { deleteFile, getFilesByFolderId, setCurrentFile } from "../store/actions/file.actions"
+import { getFilesByFolderId, removeFile, setCurrentFile, setFilterBy } from "../store/actions/file.actions"
 
 import LoadingAnim from "../cmps/LoadingAnim"
 import { onToggleModal } from "../store/actions/app.actions"
 import { loadFolderById } from "../store/actions/folder.actions"
 
 import {
-    Download, Trash2, Pencil, FileTextIcon, FileType2Icon, PresentationIcon, FileSpreadsheetIcon, LinkIcon, FolderIcon
+    Download, Trash2, Pencil, FileTextIcon, FileType2Icon, PresentationIcon, FileSpreadsheetIcon, LinkIcon, FolderIcon, CircleAlert,
+    Link
 } from 'lucide-react'
+import { fileService } from "../services/file.service"
+import { useSearchParams } from "react-router-dom"
 
 
 export default function FolderIndex() {
@@ -23,7 +25,13 @@ export default function FolderIndex() {
     const currentFolder = useSelector((storeState) => storeState.folderModule.currentFolder)
     const isLoading = useSelector((storeState) => storeState.folderModule.isLoading)
     const params = useParams()
+    const [searchParams, setSearchParams] = useSearchParams()
     const [onEditFile, setOnEditFile] = useState(true)
+    const [onClickRemove, setOnClickRemove] = useState(null)
+
+    useEffect(() => {
+        setFilterBy(fileService.getFilterFromParams(searchParams))
+    }, [])
 
     useEffect(() => {
         loadFolderById(params.folderId)
@@ -31,6 +39,7 @@ export default function FolderIndex() {
     }, [params.folderId])
 
     useEffect(() => {
+        setSearchParams(filterBy)
         getFilesByFolderId(params.folderId)
     }, [filterBy])
 
@@ -42,6 +51,12 @@ export default function FolderIndex() {
             console.log('Had issues editing folder:\n', err);
         }
     }
+
+    // async function downloadFile(file) {
+    //     const res = await fetch(`/api/download?publicId=${encodeURIComponent(file.publicId)}&ext=${file.extension}`);
+    //     const { url } = await res.json();
+    //     window.location.href = url; // browser triggers download
+    // }
 
     // async function loadFiles(folderId) {
     //     try {
@@ -176,7 +191,7 @@ export default function FolderIndex() {
                                                 title={`Edit ${doc.extension === 'Folder' ? 'folder' : 'file'} name`}
                                                 onClick={() => {
                                                     setCurrentFile(doc)
-                                                    onToggleModal('editFileModal', true)
+                                                    onToggleModal('editFileTitle', true)
                                                 }}
                                             // onClick={() =>
                                             //     onEditFile({
@@ -191,11 +206,28 @@ export default function FolderIndex() {
                                             </button>
                                         )}
                                         <button title="Download">
-                                            <Download size={16} />
+                                            <Download size={16} onClick={() => downloadFile(doc.publicId)} />
                                         </button>
-                                        <button title="Delete">
-                                            <Trash2 size={16} />
-                                        </button>
+                                        <div className="delete-container">
+                                            <button title="Delete" onClick={() => setOnClickRemove(doc.id)}>
+                                                <Trash2 size={16} />
+                                            </button>
+                                            {onClickRemove == doc.id &&
+                                                <div className="remove-file-modal">
+                                                    <div>
+                                                        <CircleAlert />
+                                                        <div>
+                                                            <p>Delete file?</p>
+                                                            <p>Are you sure you want to delete {doc.name}? This action cannot be undone.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <button onClick={() => setOnClickRemove(null)}>Cancel</button>
+                                                        <button onClick={() => removeFile(doc.id)}>Delete</button>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
                                     </div>
                                 </td>
                             </tr>

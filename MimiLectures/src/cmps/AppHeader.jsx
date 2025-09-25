@@ -8,7 +8,8 @@ import {
     Menu,
     User,
     LogOutIcon,
-    Settings
+    Settings,
+    Search
 } from 'lucide-react'
 import { logout } from '../store/actions/user.actions'
 import MenuModal from './MenuModal'

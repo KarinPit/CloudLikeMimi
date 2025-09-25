@@ -16,8 +16,8 @@ export default function UploadWidget({ folderId }) {
         return extension
     }
 
-    async function saveCloudinaryFile(res) {
-        const fileToSave = { name: res.info.original_filename, extension: getExtension(res.info), dateModified: res.info.created_at, size: res.info.bytes, folderId: folderId }
+    async function saveCloudinaryFile(info) {
+        const fileToSave = { name: info.original_filename, extension: getExtension(info), dateModified: info.created_at, size: info.bytes, folderId: folderId, publicId: info.public_id }
         try {
             await saveFile(folderId, fileToSave)
         } catch (err) {
@@ -37,7 +37,8 @@ export default function UploadWidget({ folderId }) {
                 console.log('Had issues in UploadWidget component\nError:', err);
             }
             else if (res.event === "success") {
-                saveCloudinaryFile(res)
+                console.log(res.info);
+                saveCloudinaryFile(res.info)
             }
         })
     }, [])

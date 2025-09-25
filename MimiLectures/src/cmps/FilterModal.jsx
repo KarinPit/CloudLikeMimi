@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-// import { useEffectUpdate } from '../customHooks/useEffectUpdate'
-import { utilService } from '../services/util.service'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useSearchParams } from 'react-router-dom'
 
 import { useForm } from '../customHooks/useForm'
@@ -10,8 +8,7 @@ import { fileService } from '../services/file.service'
 
 import {
     Search,
-    ClockIcon,
-    XIcon
+    X
 } from 'lucide-react'
 
 export default function FilterModal() {
@@ -22,7 +19,7 @@ export default function FilterModal() {
     const [filterByToEdit, handleChange] = useForm(filterBy, onSetFilter)
     const [isClicked, setIsClicked] = useState(false)
     const [recentSearches, setRecentSearches] = useState([])
-    const modalRef = useRef(null)
+    const filterRef = useRef(null)
 
     useEffect(() => {
         setFilterBy(fileService.getFilterFromParams(searchParams))
@@ -44,13 +41,7 @@ export default function FilterModal() {
     }, [isClicked])
 
     function handleOutsideClick(ev) {
-        const btn = ev.target.closest('button')
-
-        if (
-            modalRef.current &&
-            !modalRef.current.contains(ev.target) &&
-            !btn?.className.includes('search-button')
-        ) {
+        if (filterRef.current && !filterRef.current.contains(ev.target)) {
             setIsClicked(false)
         }
     }
@@ -61,136 +52,25 @@ export default function FilterModal() {
     }
 
     return (
-        <>
-            <button className="search-button" onClick={() => setIsClicked(true)}>
-                <Search />
-            </button>
+        <div className={`file-filter ${isClicked ? 'expanded' : 'minimized'}`} ref={filterRef}>
+            <Search size={20} className="text-gray-400 mr-3" onClick={() => setIsClicked(true)} />
 
-            <div className={`folder-filter ${isClicked ? 'show' : ''}`} ref={modalRef}>
-                <div className="filter-container">
-                    <div className='input-container'>
-                        <Search className='search-icon' />
-                        <input
-                            id="name"
-                            name="name"
-                            type="text"
-                            placeholder="Search documents..."
-                            value={filterBy.name || ''}
-                            onChange={handleChange}
-                        />
-                        {filterBy.name && (
-                            <button onClick={() => {
-                                const updatedFilter = { target: { name: 'name', value: '', type: 'text' } }
-                                handleChange(updatedFilter)
-                                setRecentSearches((prev) => {
-                                    const updatedSearches = [filterBy.name, ...prev.filter(val => val !== filterBy.name)]
-                                    return updatedSearches.slice(0, 4)
-                                })
-                            }}>
-                                <XIcon />
-                            </button>
-                        )}
-                    </div>
+            {isClicked && <>
+                <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="Search documents..."
+                    value={filterBy.name || ''}
+                    onChange={handleChange}
+                />
 
-                    <div className="search-history-container">
-                        {!filterBy.name && (
-                            <>
-                                <div>
-                                    <ClockIcon />
-                                    <h3>Recent searches</h3>
-                                </div>
-                                <div>
-                                    {recentSearches?.map((term, i) => (
-                                        <button key={i} onClick={() => {
-                                            const updatedFilter = { target: { name: 'name', value: term, type: 'text' } }
-                                            handleChange(updatedFilter)
-                                        }} >
-                                            <Search />
-                                            <p>{term}</p>
-                                        </button>
-                                    ))}
-                                </div>
-                            </>
-                        )}
+                <button onClick={() => setIsClicked(false)}>
+                    <X size={18} />
+                </button>
+            </>}
 
-                        {!isLoading ? filterBy.name && (
-                            <div className='search-results'>
-                                <h3>
-                                    {searchResults.length > 0
-                                        ? `${searchResults.length} results found`
-                                        : 'No results found'}
-                                </h3>
-                                {searchResults.length > 0 ? (
-                                    <div className="file-container">
-                                        {searchResults.map((doc, idx) => (
-                                            <div
-                                                key={idx}
-                                                className="file-row"
-                                            >
-                                                <div className="file-icon">
-                                                    {doc.icon}
-                                                </div>
-                                                <div className="file-info">
-                                                    <p className="file-name">{doc.name}</p>
-                                                    <p className="file-date-modified">
-                                                        {doc.typeLabel} • {doc.dateModified}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
 
-                                )
-                                    : (
-                                        <div className="text-center py-8">
-                                            <p className="text-gray-500">
-                                                No documents found matching "{filterBy.name}"
-                                            </p>
-                                        </div>
-                                    )}
-                            </div>
-                        ) : ''}
-
-                        {/* {filterBy.name && (
-                            <div className='search-results'>
-                                <h3>
-                                    {searchResults.length > 0
-                                        ? `${searchResults.length} results found`
-                                        : 'No results found'}
-                                </h3>
-                                {searchResults.length > 0 ? (
-                                    <div className="file-container">
-                                        {searchResults.map((doc, idx) => (
-                                            <div
-                                                key={idx}
-                                                className="file-row"
-                                            >
-                                                <div className="file-icon">
-                                                    {doc.icon}
-                                                </div>
-                                                <div className="file-info">
-                                                    <p className="file-name">{doc.name}</p>
-                                                    <p className="file-date-modified">
-                                                        {doc.typeLabel} • {doc.dateModified}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-
-                                )
-                                    : (
-                                        <div className="text-center py-8">
-                                            <p className="text-gray-500">
-                                                No documents found matching "{filterBy.name}"
-                                            </p>
-                                        </div>
-                                    )}
-                            </div>
-                        )} */}
-                    </div>
-                </div>
-            </div >
-        </>
+        </div>
     )
 }

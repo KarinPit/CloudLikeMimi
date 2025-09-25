@@ -19,7 +19,7 @@ export async function getFilesByFolderId(folderId) {
     }
 }
 
-export async function deleteFile(fileId) {
+export async function removeFile(fileId) {
     try {
         await fileService.remove(fileId)
         store.dispatch({ type: REMOVE_FILE, fileId: fileId })
@@ -68,7 +68,6 @@ export async function saveFile(folderId, file) {
     try {
         await fileService.save(file)
         await getFilesByFolderId(folderId)
-        // store.dispatch({ type: ADD_FILE, file: savedFile })
     } catch (err) {
         console.log('Had issues saving file', err)
         throw err
